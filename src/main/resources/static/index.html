@@ -18,10 +18,10 @@
         /* Nyckelframes för färgskiftning */
         @keyframes color-shift {
             0% {
-                color: #af5643; /* Första färgen */
+                color: #93b3b2; /* Första färgen */
             }
             100% {
-                color: #348642; /* Andra färgen */
+                color: rgba(114, 136, 136, 0.84); /* Andra färgen */
             }
         }
         #headerimg {
@@ -70,15 +70,15 @@
             text-decoration-line: blink;
             color: rgba(255, 255, 255, 0.78); /* Färg för länktexten */
             font-size: 80%;
-            padding: 10px 5%; /* Lite utrymme runt länktexten */
-            margin: 0; /* Lite mellanrum mellan länkarna */
+/*            padding: 7px 5% 9px; !* Lite utrymme runt länktexten *!*/
+            margin: 5%; /* Lite mellanrum mellan länkarna */
             border: solid transparent; /* En transparent ram runt länkarna */
             border-radius: 2px; /* Runda hörn för en modernare känsla */
             transition: all 0.3s ease; /* En smidig övergång för hover-effekten */
         }
 
         .nav-link:hover {
-            background-color: rgba(74, 44, 82, 0.25); /* Bakgrundsfärg för hover-effekten */
+            /*background-color: rgba(74, 44, 82, 0.25);*/ /* Bakgrundsfärg för hover-effekten */
             border-color: rgba(170, 170, 170, 0); /* Ramfärg för hover-effekten */
             color: #FFFFFF; /* Färg för länktexten på hover */
             font-size: 90%;
@@ -102,7 +102,7 @@
 
         .text-overlay {
             position: absolute;
-            top: 40px;
+            top: 10%;
             left: 245px;
             transform: translate(-50%, -50%);
             text-align: left;
@@ -123,10 +123,32 @@
 
         #headertext {
             font-family: 'arial', sans-serif; /* Cool font */
-            color: rgba(93, 78, 229, 0.77);
+            color: rgba(10, 10, 10, 1);
+        }
+        .productname {
+            font-family: 'arial', sans-serif;
+        }
+        .producttext {
+            font-family: 'arial', monospace;
         }
         body {
             margin: 0;
+        }
+        /* Basstilar för knappen */
+        .add-to-cart {
+            padding: 12px 24px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #fff;
+            background: #000000;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        #footer {
+            margin: 20px;
+            font-family: 'arial', monospace;
         }
 
         /* Använd mediaförfrågningar för att justera layouten för mindre skärmar */
@@ -158,7 +180,7 @@
         <img id="headerimg" src="../../../../img/ladyglasses1.webp" alt="headerimg"/>
         <div class="text-overlay">
             <h1 class="headername">SOLGLAJJER</h1>
-            <p id="headertext">Upptäck vårt fantastiska utbud av produkter!</p>
+            <p id="headertext">GLASSES GLASSES GLASSES</p>
         </div>
     </div>
 
@@ -174,30 +196,29 @@
     <section class="products">
         <div class="product">
             <img class="productimg" src="/img/sunglasses1.jpg" alt="sunglasses1"/>
-            <h4>glasses 1</h4>
-            <p>Sick skiglasses</p>
-            <p>Price: 10 sek</p>
-            <button>Lägg till i kundvagn</button>
+            <h4 class="productname">Glasses 1</h4>
+            <p class="producttext">Sick skiglasses</p>
+            <p class="producttext">Price: 10 sek</p>
+            <button class="add-to-cart">Add to cart</button>
         </div>
         <div class="product">
             <img class="productimg" src="/img/sunglasses2.webp" alt="sunglasses1"/>
-            <h4>Produkt 1</h4>
-            <p>Beskrivning av produkt 1.</p>
-            <p>Pris: $10</p>
-            <button>Lägg till i kundvagn</button>
-        </div>
+            <h4 class="productname">Glasses 2</h4>
+            <p class="producttext">Beskrivning av produkt 1.</p>
+            <p class="producttext">Pris: $10</p>
+            <button class="add-to-cart">Add to cart</button>        </div>
         <div class="product">
             <img class="productimg" src="/img/sunglasses3.webp" alt="sunglasses1"/>
-            <h4>glasses 1</h4>
-            <p>Sick skiglasses</p>
-            <p>Price: 10 sek</p>
-            <button>Lägg till i kundvagn</button>
+            <h4 class="productname">Glasses 3</h4>
+            <p class="producttext">Sick skiglasses</p>
+            <p class="producttext">Price: 10 sek</p>
+            <button class="add-to-cart">Add to cart</button>
         </div>
         <!-- Här kan du lägga till fler produkter -->
     </section>
 </main>
 <footer>
-    <p>&copy; 2024 Webbshop AB</p>
+    <p id="footer">&copy; 2024 Webbshop AB</p>
 </footer>
 </body>
 </html>
