@@ -2,12 +2,11 @@ package com.webshop.webshopprojektarbete.entity;
 
 import jakarta.persistence.*;
 
-import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.Objects;
+import java.util.Random;
 
 @Entity
-public class Order {
+public class Confirmation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
@@ -17,16 +16,24 @@ public class Order {
     @Column(name = "user_id", insertable=false, updatable=false, length = 200)
     private String userId;
     @Basic
-    @Column(name = "status", nullable = false)
-    private Object status;
-    @Basic
-    @Column(name = "order_time", nullable = false)
-    private Timestamp orderTime;
+    @Column(name = "token", nullable = false, length = 45)
+    private String token;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "email", nullable = false)
     private Users usersByUserId;
-    @OneToMany(mappedBy = "orderByOrderId")
-    private Collection<Orderline> orderlinesById;
+    public Confirmation (Users user){
+        this.usersByUserId = user;
+        this.token = generateRandomNumber();
+    }
+    private String generateRandomNumber(){
+        Random rand = new Random();
+        return String.valueOf(rand.nextInt(10000));
+
+    }
+
+    public Confirmation() {
+
+    }
 
     public int getId() {
         return id;
@@ -44,33 +51,25 @@ public class Order {
         this.userId = userId;
     }
 
-    public Object getStatus() {
-        return status;
+    public String getToken() {
+        return token;
     }
 
-    public void setStatus(Object status) {
-        this.status = status;
-    }
-
-    public Timestamp getOrderTime() {
-        return orderTime;
-    }
-
-    public void setOrderTime(Timestamp orderTime) {
-        this.orderTime = orderTime;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Order order = (Order) o;
-        return id == order.id && Objects.equals(userId, order.userId) && Objects.equals(status, order.status) && Objects.equals(orderTime, order.orderTime);
+        Confirmation that = (Confirmation) o;
+        return id == that.id && Objects.equals(userId, that.userId) && Objects.equals(token, that.token);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, status, orderTime);
+        return Objects.hash(id, userId, token);
     }
 
     public Users getUsersByUserId() {
@@ -79,13 +78,5 @@ public class Order {
 
     public void setUsersByUserId(Users usersByUserId) {
         this.usersByUserId = usersByUserId;
-    }
-
-    public Collection<Orderline> getOrderlinesById() {
-        return orderlinesById;
-    }
-
-    public void setOrderlinesById(Collection<Orderline> orderlinesById) {
-        this.orderlinesById = orderlinesById;
     }
 }

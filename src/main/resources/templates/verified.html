@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Verified</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    a {
+      text-decoration: none;
+      color: #009688;
+      font-weight: bold;
+    }
+
+    a:hover {
+      color: #00796b;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Verified</h1>
+  <p>Redirecting to <a href="http://localhost:8080/index.html">home page</a>...</p>
+</div>
+
+<script>
+  // Redirect after a delay (e.g., 3000 milliseconds = 3 seconds)
+  setTimeout(function() {
+    window.location.href = "http://localhost:8080/index.html";
+  }, 1500);
+</script>
+</body>
+</html>
