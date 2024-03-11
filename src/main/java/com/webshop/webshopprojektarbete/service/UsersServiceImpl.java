@@ -112,6 +112,9 @@ public class UsersServiceImpl implements UserService{
         }
         return status;
     }
+    public boolean isRegistered(String email) {
+        return userRepository.existsByEmail(email);
+    }
     private String generateRandomNumber(){
         Random rand = new Random();
         return String.valueOf(rand.nextInt(10000));

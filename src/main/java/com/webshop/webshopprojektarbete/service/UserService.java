@@ -17,5 +17,6 @@ public interface UserService {
     Status checkIfExist(String email);
 
     Boolean verifyToken(String token);
+    boolean isRegistered(String email);
 
 }
