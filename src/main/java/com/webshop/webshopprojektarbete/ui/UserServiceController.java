@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+import java.util.function.ToDoubleBiFunction;
 
 
 @Controller
@@ -24,6 +24,11 @@ public class UserServiceController {
                               @RequestParam String email,//från formulär
                               @RequestParam String password,//från formulär
                                Model model){//vi ber om detta
+        if (userservice.isRegistered(email)) {
+            // TODO: 2024-03-11 om användaren redan finns registrerad, ge felmeddelande och skicka till loggin-sidan
+            model.addAttribute("validationstatus", "Email already registered, please log in.");
+            return "loginsite";
+        }
         if (userservice.checkEmailFormat(email)){
             userservice.saveUser(new Users(email,name,lastname,password));
             model.addAttribute("userinfo", email);
