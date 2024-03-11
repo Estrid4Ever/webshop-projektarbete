@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            color: #3498db;
+        }
+
+        input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #3498db;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2184b2;
+        }
+
+        .eye-icon {
+            position: absolute;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .password-container {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<form method="post" action="/newUserMVC">
+    <h1>REGISTER</h1>
+
+    <input type="text" name="name" placeholder="Name">
+    <br/>
+    <input type="text" name="lastname" placeholder="Lastname">
+    <br/>
+    <input type="text" name="email" placeholder="Email">
+    <p><span th:text="${wrong_email_format}"></span></p>
+    <br/>
+
+    <div class="password-container">
+        <input type="password" name="password" placeholder="Password" id="passwordField">
+        <span class="eye-icon" id="togglePassword">&#128065;</span>
+    </div>
+
+    <br/>
+
+    <input type="submit" value="Register">
+</form>
+
+<script>
+    document.getElementById("togglePassword").addEventListener("click", function() {
+        var passwordField = document.getElementById("passwordField");
+        passwordField.type = passwordField.type === "password" ? "text" : "password";
+        this.textContent = passwordField.type === "password" ? "👁️" : "👁️";
+    });
+</script>
+</body>
+</html>

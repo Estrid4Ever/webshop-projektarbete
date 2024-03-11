@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <meta name="supported-color-schemes" content="light">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+    <title>Webbshop</title>
+    <style>
+        /* Stilmall här */
+        .headername {
+            font-family: 'arial-black', sans-serif; /* Cool font */
+            color: #ff5733; /* Första färgen */
+            animation: color-shift 5s infinite alternate; /* Animerad färgskiftning */
+        }
+
+        /* Nyckelframes för färgskiftning */
+        @keyframes color-shift {
+            0% {
+                color: #93b3b2; /* Första färgen */
+            }
+            100% {
+                color: rgba(114, 136, 136, 0.84); /* Andra färgen */
+            }
+        }
+
+        #headerimg {
+            width: 100%;
+        }
+
+        #navbar {
+            text-align: center;
+        }
+
+        .productimg {
+            width: 100%;
+        }
+
+        .product {
+            margin-top: 5px;
+            flex: 1; /* Dela utrymmet jämnt mellan elementen */
+            padding: 20px;
+            margin-right: 10px; /* Lite mellanrum mellan elementen */
+            width: calc(33.33% - 20px); /* Anpassa storleken för varje produkt */
+            box-sizing: border-box;
+        }
+
+        .products {
+            display: flex; /* Använd flexbox */
+            flex-wrap: wrap;
+        }
+
+        .product:last-child {
+            margin-right: 0; /* Ingen marginal till det sista elementet */
+        }
+
+        #navbar {
+            margin: 0 0 -40px;
+            display: block;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(5, 112, 108, 0.33); /* Bakgrundsfärg för navigationsfältet */
+            padding: 10px 0; /* Lite utrymme ovanför och nedanför länkarna */
+            border-radius: 0; /* Runda hörn för en modernare känsla */
+            transform: translate(0, -100%);
+        }
+
+        .nav-link {
+            font-family: 'arial', sans-serif;
+            text-decoration-line: blink;
+            color: rgba(255, 255, 255, 0.78); /* Färg för länktexten */
+            font-size: 80%;
+/*            padding: 7px 5% 9px; !* Lite utrymme runt länktexten *!*/
+            margin: 5%; /* Lite mellanrum mellan länkarna */
+            border: solid transparent; /* En transparent ram runt länkarna */
+            border-radius: 2px; /* Runda hörn för en modernare känsla */
+            transition: all 0.3s ease; /* En smidig övergång för hover-effekten */
+        }
+
+        .nav-link:hover {
+            /*background-color: rgba(74, 44, 82, 0.25);*/ /* Bakgrundsfärg för hover-effekten */
+            border-color: rgba(170, 170, 170, 0); /* Ramfärg för hover-effekten */
+            color: #FFFFFF; /* Färg för länktexten på hover */
+            font-size: 90%;
+        }
+
+        .nav-link:focus {
+            outline: none; /* Ta bort fokusramen när länken är i fokus */
+        }
+
+        .header-container {
+            position: relative;
+            width: 100%;
+            margin: 0;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin: 0;
+        }
+
+        .text-overlay {
+            position: absolute;
+            top: 10%;
+            left: 245px;
+            transform: translate(-50%, -50%);
+            text-align: left;
+            z-index: 1;
+            white-space: nowrap;
+            text-overflow-ellipsis: 0;
+        }
+
+        .text-overlay h1 {
+            font-size: 400%;
+            margin-bottom: 0;
+        }
+
+        .text-overlay p {
+            font-size: 120%;
+            margin-bottom: 0;
+        }
+
+        #headertext {
+            font-family: 'arial', sans-serif; /* Cool font */
+            color: rgba(10, 10, 10, 1);
+        }
+
+        .productname {
+            font-family: 'arial', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .producttext {
+            font-family: 'arial', monospace;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        /* Basstilar för knappen */
+        .add-to-cart {
+            padding: 12px 24px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #fff;
+            background: #000000;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        #footer {
+            margin: 20px;
+            font-family: 'arial', monospace;
+        }
+
+        .products-and-sort {
+            margin-bottom: -20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .products-and-sort div {
+            display: flex;
+            align-items: center; /* Vertically center items */
+        }
+
+        #producttitle {
+            font-family: 'arial', sans-serif; /* Cool font */
+            color: rgba(94, 70, 96, 0.49);
+            margin-left: 20px;
+        }
+
+        #sort {
+            padding: 6px 20px;
+            font-size: 13px;
+            font-weight: normal;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.8);
+            background: rgba(255, 255, 255, 0.89);
+            border: #5f8382;
+/*            border: solid;*/
+            border-radius: 1px;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        #sort:focus {
+            outline: none; /* Ta bort fokusramen när länken är i fokus */
+        }
+
+        .shopping-cart-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(32, 166, 162, 0.6);
+            padding: 6px 7px 5px 5px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            z-index: 1001; /* Ensure the button is on top of other content */
+            transition: all 0.5s ease;
+        }
+
+        .shopping-cart-btn i {
+            font-size: 22px; /* Adjust the size of the shopping cart icon */
+            color: #e7efef; /* Adjust the color of the shopping cart icon */
+        }
+
+        .cart-window {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            z-index: 1000;
+            display: inherit; /* Start with display none */
+            opacity: 0; /* Start with opacity 0 */
+        }
+
+        .show {
+            /*display: block;*/ /* Display block when shown */
+            /*opacity: 1;*/ /* Opacity 1 when shown */
+            transition: opacity 0.3s ease;
+        }
+
+        .cart-container {
+            position: relative;
+        }
+
+
+        /* Använd mediaförfrågningar för att justera layouten för mindre skärmar */
+        @media screen and (max-width: 768px) {
+            .product {
+                width: calc(50% - 20px); /* Gör produkterna 50% breda på mindre skärmar */
+            }
+        }
+        @media (prefers-color-scheme: light) {
+            body {
+                background-color: white;
+                color: black;
+            }
+        }
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: white;
+                color: black;
+            }
+        }
+
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const cartBtn = document.getElementById("cartBtn");
+            const cartWindow = document.getElementById("cartWindow");
+
+            cartBtn.addEventListener("click", function() {
+                cartWindow.classList.toggle("show");
+                if (cartWindow.style.opacity === "1") {
+                    cartWindow.style.opacity = "0";
+                    cartBtn.style.paddingLeft = "5px"; // Reset padding when hiding the cart window
+                    cartBtn.style.borderRadius = "6px";
+                } else {
+                    cartWindow.style.opacity = "1";
+                    cartBtn.style.paddingLeft = "111px"; // Adjust padding when showing the cart window
+                    cartBtn.style.borderRadius = "5px 5px 2px 2px";
+                }
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+<header>
+
+    <div class="header-container">
+        <img id="headerimg" src="../../../../img/ladyglasses1.webp" alt="headerimg"/>
+        <div class="text-overlay">
+            <h1 class="headername">SOLGLAJJER</h1>
+            <p id="headertext">GLASSES GLASSES GLASSES GLASSES</p>
+        </div>
+    </div>
+
+    <nav id="navbar">
+        <a href="#" class="nav-link">HOME</a>
+        <a href="#" class="nav-link">PRODUCTS</a>
+        <a href="#" class="nav-link">SHOPPING CART</a>
+        <a href="#" class="nav-link">CONTACT US</a>
+    </nav>
+<!--
+    <button class="shopping-cart-btn"><i class="fas fa-shopping-cart"></i></button>
+-->
+    <div class="cart-container">
+        <button id="cartBtn" class="shopping-cart-btn"><i class="fas fa-shopping-cart"></i></button>
+        <div class="cart-window" id="cartWindow">
+            <br>
+
+            <!-- Cart content goes here -->
+            <p>Your cart is empty.</p>
+        </div>
+    </div>
+
+</header>
+<main>
+    <div class="products-and-sort">
+            <h3 id="producttitle">PRODUCTS</h3>
+        <div>
+            <label for="sort"></label>
+            <select name="sort" id="sort">
+                <option hidden disabled selected>Sort by</option>
+                <option value="Price high">Price high</option>
+                <option value="Price low">Price low</option>
+            </select>
+        </div>
+    </div>
+
+    <section class="products">
+        <div class="product">
+            <img class="productimg" src="/img/sunglasses1.jpg" alt="sunglasses1"/>
+            <h4 class="productname">Glasses 1</h4>
+            <p class="producttext">Sick skiglasses</p>
+            <p class="producttext">Price: 10 sek</p>
+            <button class="add-to-cart">Add to cart</button>
+        </div>
+        <div class="product">
+            <img class="productimg" src="/img/sunglasses2.webp" alt="sunglasses1"/>
+            <h4 class="productname">Glasses 2</h4>
+            <p class="producttext">Beskrivning av produkt 1.</p>
+            <p class="producttext">Pris: $10</p>
+            <button class="add-to-cart">Add to cart</button>        </div>
+        <div class="product">
+            <img class="productimg" src="/img/sunglasses3.webp" alt="sunglasses1"/>
+            <h4 class="productname">Glasses 3</h4>
+            <p class="producttext">Sick skiglasses</p>
+            <p class="producttext">Price: 10 sek</p>
+            <button class="add-to-cart">Add to cart</button>
+        </div>
+        <!-- Här kan du lägga till fler produkter -->
+    </section>
+</main>
+<footer>
+    <p id="footer">&copy; 2024 Webbshop AB</p>
+</footer>
+</body>
+</html>
