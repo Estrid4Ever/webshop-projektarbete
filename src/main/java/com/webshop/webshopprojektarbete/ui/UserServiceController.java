@@ -82,8 +82,4 @@ public class UserServiceController {
         }
 
     }
-    @GetMapping("/")
-    public String doGet() {
-        return "index";
-    }
 }
