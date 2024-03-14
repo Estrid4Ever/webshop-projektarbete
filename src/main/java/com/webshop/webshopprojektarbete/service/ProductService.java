@@ -16,8 +16,7 @@ public class ProductService {
     private ProductRepo productRepo;
 
     public List<Products> fetchAllProducts() {
-        List<Products> allProducts = productRepo.findAll();
-        return allProducts;
+        return productRepo.findAll();
     }
 
     public List<Products> sortProducts(List<Products> allProducts, String sortType) {
@@ -25,6 +24,8 @@ public class ProductService {
             allProducts.sort(Comparator.comparingInt(Products::getPrice).reversed());
         } else if (sortType.equalsIgnoreCase("alphabetical")) {
             allProducts.sort(Comparator.comparing(Products::getName));
+        } else if (sortType.equalsIgnoreCase("Popularity")) {
+            Collections.shuffle(allProducts);
         } else {
             allProducts.sort(Comparator.comparingInt(Products::getPrice));
         }

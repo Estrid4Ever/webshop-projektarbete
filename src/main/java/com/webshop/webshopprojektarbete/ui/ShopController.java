@@ -31,8 +31,8 @@ public class ShopController {
     @PostMapping("/sort")
     public String sortProducts(@RequestParam String sort, Model model) {
         List<Products> allProducts = productService.fetchAllProducts();
-        productService.sortProducts(allProducts, sort);
-        model.addAttribute("allproducts", allProducts);
+
+        model.addAttribute("allproducts", productService.sortProducts(allProducts, sort));
         return "index";
     }
 
