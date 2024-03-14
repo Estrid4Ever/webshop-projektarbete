@@ -13,14 +13,14 @@ import java.util.Optional;
 @Service
 @SessionScope
 public class ShoppingCartService {
-    private Hashtable<Products, int> shoppingCart;
+    private Hashtable<Products, Integer> shoppingCart;
 
     @Autowired
     private ProductRepo productRepo;
 
     @PostConstruct
     public void init() {
-        shoppingCart = new Hashtable<Products, int>();
+        shoppingCart = new Hashtable<Products, Integer>();
     }
 
     public void addProductToCart(int id) {
@@ -62,7 +62,7 @@ public class ShoppingCartService {
         shoppingCart.clear();
     }
 
-    public Hashtable<Products, int> getShoppingCart() {
+    public Hashtable<Products, Integer> getShoppingCart() {
         return shoppingCart;
     }
 }
