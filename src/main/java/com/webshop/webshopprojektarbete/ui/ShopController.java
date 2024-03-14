@@ -26,7 +26,7 @@ public class ShopController {
     public String doGet(Model model) {
         List<Products> allProducts = productService.fetchAllProducts();
         Hashtable<Products, Integer> shoppingCart = shoppingCartService.getShoppingCart();
-        int cartTotal = shoppingCartService.getShoppingCartTotal();
+        String cartTotal = shoppingCartService.getShoppingCartTotal();
         model.addAttribute("total", cartTotal);
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("allproducts", allProducts);
@@ -42,7 +42,7 @@ public class ShopController {
     public String sortProducts(@RequestParam String sort, Model model) {
         List<Products> allProducts = productService.fetchAllProducts();
         Hashtable<Products, Integer> shoppingCart = shoppingCartService.getShoppingCart();
-        int cartTotal = shoppingCartService.getShoppingCartTotal();
+        String cartTotal = shoppingCartService.getShoppingCartTotal();
         model.addAttribute("total", cartTotal);
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("allproducts", productService.sortProducts(allProducts, sort));
@@ -68,6 +68,18 @@ public class ShopController {
     @GetMapping("/add-to-cart")
     public String addItemToCart(@RequestParam("item-id") String itemId, Model model) {
         shoppingCartService.addProductToCart(Integer.parseInt(itemId));
+        return doGet(model);
+    }
+
+    @GetMapping("/remove-from-cart")
+    public String removeItemFromCart(@RequestParam("item-id") String itemId,
+                                     @RequestParam("amount") String amount, Model model) {
+
+        int removeAmount = Integer.parseInt(amount);
+
+        for (int i = 0; i < removeAmount; i++) {
+            shoppingCartService.removeProductFromCart(Integer.parseInt(itemId));
+        }
         return doGet(model);
     }
 }

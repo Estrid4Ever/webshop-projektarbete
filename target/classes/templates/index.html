@@ -213,7 +213,7 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            width: 250px;
+            width: 270px;
             background: #fff;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -270,8 +270,62 @@
 
         .cartitem {
             display: flex;
+            align-items: stretch; /* Vertically center items */
+            justify-content: space-between;
+        }
+
+        #name-price {
+            display: flex;
             align-items: center; /* Vertically center items */
             justify-content: space-between;
+            text-transform: uppercase;
+            font-family: 'arial', sans-serif; /* Cool font */
+            color: rgba(94, 70, 96, 0.95);
+            font-size: 14px;
+        }
+
+        #amount-buttons {
+            display: flex;
+            align-items: center; /* Vertically center items */
+            justify-content: space-evenly;
+            text-transform: uppercase;
+            font-family: 'arial', sans-serif; /* Cool font */
+            font-size: 14px;
+            font-weight: bold;
+            color: rgba(94, 70, 96, 0.75);
+        }
+
+        .cart-item-button {
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            color: rgba(94, 70, 96, 0.75);
+            font-size: 13px;
+            text-transform: uppercase;
+            font-family: 'arial', sans-serif; /* Cool font */
+            margin-right: 3px;
+            margin-left: 3px;
+        }
+
+        #cart-item-name {
+            margin-right: 10px;
+        }
+
+        #cart-item-amount {
+            color: black;
+            cursor: default;
+            border: #5f8382;
+            padding: 4px;
+            border-radius: 3px;
+            font-size: 15px;
+            color: rgba(94, 70, 96, 0.95);
+        }
+        #xbutton {
+            margin-left: 10px;
+        }
+
+        .hr-cart {
+            color: rgba(94, 70, 96, 0.25);
         }
 
 
@@ -312,7 +366,7 @@
                 } else {
                     cartWindow.style.opacity = "1";
                     cartWindow.style.display = "block";
-                    cartBtn.style.paddingLeft = "240px"; // Adjust padding when showing the cart window
+                    cartBtn.style.paddingLeft = "260px"; // Adjust padding when showing the cart window
                     cartBtn.style.borderRadius = "5px 5px 2px 2px";
                 }
             });
@@ -339,8 +393,8 @@
     </div>
 
     <nav id="navbar">
-        <a href="#" class="nav-link">HOME</a>
-        <a href="http://localhost:8080/searchpage" class="nav-link">SEARCH</a>
+        <a href="/" class="nav-link">HOME</a>
+        <a href="/searchpage" class="nav-link">SEARCH</a>
         <a href="#" class="nav-link">MY ACCOUNT</a>
         <a href="#" class="nav-link">CONTACT US</a>
     </nav>
@@ -351,19 +405,26 @@
         <button id="cartBtn" class="shopping-cart-btn"><i class="fas fa-shopping-cart"></i></button>
         <div class="cart-window" id="cartWindow" aria-placeholder="Your cart is empty">
             <br>
-            <hr>
+            <hr class="hr-cart">
             <div class="cartitem" th:each="item : ${shoppingcart}">
-                <p id="cart-item-name" th:text="${item.getKey().getName()}">Name</p>
-                <p id="cart-item-price" th:text="${item.getKey().getPrice()}">Price</p>
-                <a href="/" class="cart-item-button">+</a>
-                <p id="cart-item-amount" th:text="${item.value}">Amount</p>
-                <a href="/" class="cart-item-button">-</a>
-                <a href="/" class="cart-item-button">✕</a>
+                <div id="name-price">
+                    <p id="cart-item-name" th:text="${item.getKey().getName()}">Name</p>
+                    <p id="cart-item-price" th:text="${item.getKey().getPrice()} + ' sek'">Price</p>
+                </div>
+
+                <div id="amount-buttons">
+                    <a th:href="@{'/add-to-cart?item-id=' + ${item.getKey().id}}" class="cart-item-button">➕</a>
+                    <p id="cart-item-amount" th:text="${item.value}">Amount</p>
+                    <a th:href="@{'/remove-from-cart?item-id=' + ${item.getKey().id}
+                     + '&amount=' + '1'}" class="cart-item-button">➖</a>
+                    <a id="xbutton" th:href="@{'/remove-from-cart?item-id=' + ${item.getKey().id}
+                    + '&amount=' + ${item.value}}" class="cart-item-button">❌</a>
+                </div>
             </div>
 
-            <hr>
+            <hr class="hr-cart">
             <div>
-                <p id="total" th:text="'Total: ' + ${total} + ' sek'"></p>
+                <p id="total" th:text="${total}"></p>
             </div>
             <div id="cart-options">
                 <a href="#" id="go-to-check-out">Check out</a>

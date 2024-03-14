@@ -66,12 +66,12 @@ public class ShoppingCartService {
     public Hashtable<Products, Integer> getShoppingCart() {
         return shoppingCart;
     }
-    public int getShoppingCartTotal() {
+    public String getShoppingCartTotal() {
         int total = 0;
 
         for (Map.Entry<Products, Integer> entry : shoppingCart.entrySet()) {
             total += (entry.getKey().getPrice() * entry.getValue());
         }
-        return total;
+        return total == 0 ? "" : "Total: " + total + " sek";
     }
 }
