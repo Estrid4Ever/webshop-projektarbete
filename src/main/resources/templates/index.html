@@ -182,7 +182,6 @@
             color: rgba(0, 0, 0, 0.8);
             background: rgba(255, 255, 255, 0.89);
             border: #5f8382;
-            /*            border: solid;*/
             border-radius: 1px;
             cursor: pointer;
             margin-right: 20px;
@@ -214,6 +213,7 @@
             position: fixed;
             top: 20px;
             right: 20px;
+            width: 250px;
             background: #fff;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -274,9 +274,11 @@
     </style>
 
     <script>
+
         document.addEventListener("DOMContentLoaded", function() {
             const cartBtn = document.getElementById("cartBtn");
             const cartWindow = document.getElementById("cartWindow");
+            const addToCartButtons = document.querySelectorAll(".add-to-cart");
 
             cartBtn.addEventListener("click", function() {
                 cartWindow.classList.toggle("show");
@@ -288,11 +290,33 @@
                 } else {
                     cartWindow.style.opacity = "1";
                     cartWindow.style.display = "block";
-                    cartBtn.style.paddingLeft = "111px"; // Adjust padding when showing the cart window
+                    cartBtn.style.paddingLeft = "240px"; // Adjust padding when showing the cart window
                     cartBtn.style.borderRadius = "5px 5px 2px 2px";
                 }
             });
+
+            addToCartButtons.forEach(btn => {
+                btn.addEventListener("click", function() {
+                    // Get product information
+                    const productContainer = btn.closest(".product");
+                    const productName = productContainer.querySelector(".productname").textContent;
+                    const productPrice = productContainer.querySelector("#productprice").textContent;
+
+                    // Create cart item element
+                    const cartItem = document.createElement("p");
+                    cartItem.textContent = productName + " - " + productPrice;
+
+                    // Append cart item to cart window
+                    cartWindow.appendChild(cartItem);
+                    cartWindow.style.display = "block";
+                    cartWindow.style.opacity = "1";
+                });
+            });
         });
+
+        function submitForm() {
+            document.getElementById("sortForm").submit();
+        }
 
     </script>
 
@@ -312,8 +336,8 @@
 
     <nav id="navbar">
         <a href="#" class="nav-link">HOME</a>
-        <a href="#" class="nav-link">PRODUCTS</a>
-        <a href="#" class="nav-link">SHOPPING CART</a>
+        <a href="#" class="nav-link">SALE</a>
+        <a href="#" class="nav-link">MY ACCOUNT</a>
         <a href="#" class="nav-link">CONTACT US</a>
     </nav>
     <!--
@@ -321,11 +345,10 @@
     -->
     <div class="cart-container">
         <button id="cartBtn" class="shopping-cart-btn"><i class="fas fa-shopping-cart"></i></button>
-        <div class="cart-window" id="cartWindow">
+        <div class="cart-window" id="cartWindow" aria-placeholder="Your cart is empty">
             <br>
+            <p class="cartitem"></p>
 
-            <!-- Cart content goes here -->
-            <p>Your cart is empty.</p>
         </div>
     </div>
 
@@ -334,12 +357,13 @@
     <div class="products-and-sort">
         <h3 id="producttitle">PRODUCTS</h3>
         <div>
-            <form action="sort" method="post">
+            <form id="sortForm" action="/sort" method="post">
                 <label for="sort"></label>
-                <select name="sort" id="sort">
+                <select name="sort" id="sort" onchange="submitForm()">
                     <option hidden disabled selected>Sort by</option>
                     <option value="Price high">Price high</option>
                     <option value="Price low">Price low</option>
+                    <option value="Popularity">Popularity</option>
                 </select>
             </form>
         </div>
@@ -349,8 +373,8 @@
         <div th:each="p : ${allproducts}" class="product">
             <img class="productimg" th:src="${p.imagePath}" alt="sunglasses1"/>
             <h4 class="productname" th:text="${p.name}">Glasses 1</h4>
-            <p class="producttext" th:text="${p.getDescription()}">Sick skiglasses</p>
-            <p id="productprice" class="producttext" th:text="'Price: ' + ${p.price}">Price: </p>
+            <p class="producttext" th:text="'Color: ' + ${p.color} + '    Brand: ' + ${p.brand}">Sick skiglasses</p>
+            <p id="productprice" class="producttext" th:text="'Price: ' + ${p.price} + ' sek'">Price: </p>
             <button class="add-to-cart">Add to cart</button>
         </div>
 
