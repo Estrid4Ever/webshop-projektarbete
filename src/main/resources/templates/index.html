@@ -233,22 +233,45 @@
         .cart-container {
             position: relative;
         }
-        #login {
-            position: absolute;
-            top: 37px;
-            right: 35px;
-            transform: translate(-50%, -50%);
-            text-align: left;
-            z-index: 1001;
-            background-color: rgba(32, 166, 162, 0.5);
-            padding: 8px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-family: 'arial', sans-serif;
-            color: #e7efef;
-            font-size: 15px;
+
+        #go-to-check-out {
+            padding: 8px 22px;
+            margin: 10px 10px 2px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #fff;
+            background: #44c51c;
             border: none;
+            border-radius: 2px;
+            cursor: pointer;
             text-decoration: none;
+        }
+
+        #clear-cart {
+            padding: 8px 22px;
+            margin: 10px 10px 2px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #fff;
+            background: rgba(203, 28, 28, 0.79);
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        #cart-options {
+            display: flex;
+            align-items: center; /* Vertically center items */
+            justify-content: center;
+        }
+
+        .cartitem {
+            display: flex;
+            align-items: center; /* Vertically center items */
+            justify-content: space-between;
         }
 
 
@@ -278,7 +301,6 @@
         document.addEventListener("DOMContentLoaded", function() {
             const cartBtn = document.getElementById("cartBtn");
             const cartWindow = document.getElementById("cartWindow");
-            const addToCartButtons = document.querySelectorAll(".add-to-cart");
 
             cartBtn.addEventListener("click", function() {
                 cartWindow.classList.toggle("show");
@@ -295,23 +317,6 @@
                 }
             });
 
-            addToCartButtons.forEach(btn => {
-                btn.addEventListener("click", function() {
-                    // Get product information
-                    const productContainer = btn.closest(".product");
-                    const productName = productContainer.querySelector(".productname").textContent;
-                    const productPrice = productContainer.querySelector("#productprice").textContent;
-
-                    // Create cart item element
-                    const cartItem = document.createElement("p");
-                    cartItem.textContent = productName + " - " + productPrice;
-
-                    // Append cart item to cart window
-                    cartWindow.appendChild(cartItem);
-                    cartWindow.style.display = "block";
-                    cartWindow.style.opacity = "1";
-                });
-            });
         });
 
         function submitForm() {
@@ -325,7 +330,6 @@
 <header>
 
     <div class="header-container">
-        <a href="/loginsite" id="login">Log in</a>
         <img id="headerimg" src="/image?path=/img/ladyglasses1.webp" alt="headerimg"/>
 
         <div class="text-overlay">
@@ -347,7 +351,24 @@
         <button id="cartBtn" class="shopping-cart-btn"><i class="fas fa-shopping-cart"></i></button>
         <div class="cart-window" id="cartWindow" aria-placeholder="Your cart is empty">
             <br>
-            <p class="cartitem"></p>
+            <hr>
+            <div class="cartitem" th:each="item : ${shoppingcart}">
+                <p id="cart-item-name" th:text="${item.getKey().getName()}">Name</p>
+                <p id="cart-item-price" th:text="${item.getKey().getPrice()}">Price</p>
+                <a href="/" class="cart-item-button">+</a>
+                <p id="cart-item-amount" th:text="${item.value}">Amount</p>
+                <a href="/" class="cart-item-button">-</a>
+                <a href="/" class="cart-item-button">✕</a>
+            </div>
+
+            <hr>
+            <div>
+                <p id="total" th:text="'Total: ' + ${total} + ' sek'"></p>
+            </div>
+            <div id="cart-options">
+                <a href="#" id="go-to-check-out">Check out</a>
+                <a href="/clear-cart" id="clear-cart">Clear</a>
+            </div>
 
         </div>
     </div>
@@ -381,7 +402,7 @@
             <h4 class="productname" th:text="${p.name}">Glasses 1</h4>
             <p class="producttext" th:text="'Color: ' + ${p.color} + '    Brand: ' + ${p.brand}">Sick skiglasses</p>
             <p id="productprice" class="producttext" th:text="'Price: ' + ${p.price} + ' sek'">Price: </p>
-            <button class="add-to-cart">Add to cart</button>
+            <a th:href="@{'/add-to-cart?item-id=' + ${p.id}}"><button class="add-to-cart">Add to cart</button></a>
         </div>
 
         <!-- Här kan du lägga till fler produkter -->

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -64,5 +65,13 @@ public class ShoppingCartService {
 
     public Hashtable<Products, Integer> getShoppingCart() {
         return shoppingCart;
+    }
+    public int getShoppingCartTotal() {
+        int total = 0;
+
+        for (Map.Entry<Products, Integer> entry : shoppingCart.entrySet()) {
+            total += (entry.getKey().getPrice() * entry.getValue());
+        }
+        return total;
     }
 }

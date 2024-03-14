@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Hashtable;
 import java.util.List;
 
 @Controller
@@ -24,6 +25,10 @@ public class ShopController {
     @GetMapping("/")
     public String doGet(Model model) {
         List<Products> allProducts = productService.fetchAllProducts();
+        Hashtable<Products, Integer> shoppingCart = shoppingCartService.getShoppingCart();
+        int cartTotal = shoppingCartService.getShoppingCartTotal();
+        model.addAttribute("total", cartTotal);
+        model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("allproducts", allProducts);
         return "index";
     }
@@ -36,17 +41,33 @@ public class ShopController {
     @PostMapping("/sort")
     public String sortProducts(@RequestParam String sort, Model model) {
         List<Products> allProducts = productService.fetchAllProducts();
-
+        Hashtable<Products, Integer> shoppingCart = shoppingCartService.getShoppingCart();
+        int cartTotal = shoppingCartService.getShoppingCartTotal();
+        model.addAttribute("total", cartTotal);
+        model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("allproducts", productService.sortProducts(allProducts, sort));
         return "index";
     }
+
 
     @PostMapping("/search")
     public String searchProduct(@RequestParam String searchItem, Model model) {
         List<Products> p = productService.findings(searchItem);
 
-        model.addAttribute("searchItem", productService.sortProducts(p,"alphabetical"));
+        model.addAttribute("searchItem", productService.sortProducts(p, "alphabetical"));
         return "searchpage";
     }
+    @GetMapping("/clear-cart")
+    public String clearCart(Model model) {
+        shoppingCartService.clearShoppingCart();
+        List<Products> allProducts = productService.fetchAllProducts();
+        model.addAttribute("allproducts", allProducts);
+        return "index";
+    }
 
+    @GetMapping("/add-to-cart")
+    public String addItemToCart(@RequestParam("item-id") String itemId, Model model) {
+        shoppingCartService.addProductToCart(Integer.parseInt(itemId));
+        return doGet(model);
+    }
 }
