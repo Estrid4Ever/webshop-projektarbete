@@ -294,24 +294,7 @@
                     cartBtn.style.borderRadius = "5px 5px 2px 2px";
                 }
             });
-
-            addToCartButtons.forEach(btn => {
-                btn.addEventListener("click", function() {
-                    // Get product information
-                    const productContainer = btn.closest(".product");
-                    const productName = productContainer.querySelector(".productname").textContent;
-                    const productPrice = productContainer.querySelector("#productprice").textContent;
-
-                    // Create cart item element
-                    const cartItem = document.createElement("p");
-                    cartItem.textContent = productName + " - " + productPrice;
-
-                    // Append cart item to cart window
-                    cartWindow.appendChild(cartItem);
-                    cartWindow.style.display = "block";
-                    cartWindow.style.opacity = "1";
-                });
-            });
+            
         });
 
         function submitForm() {
@@ -367,7 +350,7 @@
             <h4 class="productname" th:text="${p.name}">Glasses 1</h4>
             <p class="producttext" th:text="'Color: ' + ${p.color} + '    Brand: ' + ${p.brand}">Sick skiglasses</p>
             <p id="productprice" class="producttext" th:text="'Price: ' + ${p.price} + ' sek'">Price: </p>
-            <button class="add-to-cart">Add to cart</button>
+            <a th:href="@{'/add-to-cart?item-id=' + ${p.id}}"><button class="add-to-cart">Add to cart</button></a>
         </div>
 
 

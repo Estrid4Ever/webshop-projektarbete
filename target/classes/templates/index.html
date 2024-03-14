@@ -390,12 +390,6 @@
         </div>
     </div>
 
-    <form method="post" action="/search" style="margin-top: 20px;">
-        <input type="text" name="searchItem" value="" placeholder="Search" required style="padding: 10px; font-size: 16px; border: 2px solid #ddd; border-radius: 5px; width: 80%; max-width: 300px; box-sizing: border-box;">
-        <button type="submit" style="padding: 10px 20px; font-size: 16px; background-color: #4caf50; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Search</button>
-    </form>
-
-
     <section class="products">
         <div th:each="p : ${allproducts}" class="product">
             <img class="productimg" th:src="${p.imagePath}" alt="sunglasses1"/>
