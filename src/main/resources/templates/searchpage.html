@@ -354,35 +354,23 @@
 
 </header>
 <main>
-    <div class="products-and-sort">
-        <h3 id="producttitle">PRODUCTS</h3>
-        <div>
-            <form id="sortForm" action="/sort" method="post">
-                <label for="sort"></label>
-                <select name="sort" id="sort" onchange="submitForm()">
-                    <option hidden disabled selected>Sort by</option>
-                    <option value="Price high">Price high</option>
-                    <option value="Price low">Price low</option>
-                    <option value="Popularity">Popularity</option>
-                </select>
-            </form>
-        </div>
-    </div>
 
     <form method="post" action="/search" style="margin-top: 20px;">
         <input type="text" name="searchItem" value="" placeholder="Search" required style="padding: 10px; font-size: 16px; border: 2px solid #ddd; border-radius: 5px; width: 80%; max-width: 300px; box-sizing: border-box;">
         <button type="submit" style="padding: 10px 20px; font-size: 16px; background-color: #4caf50; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Search</button>
     </form>
 
-
     <section class="products">
-        <div th:each="p : ${allproducts}" class="product">
+
+        <div th:each="p : ${searchItem}" class="product">
             <img class="productimg" th:src="${p.imagePath}" alt="sunglasses1"/>
             <h4 class="productname" th:text="${p.name}">Glasses 1</h4>
             <p class="producttext" th:text="'Color: ' + ${p.color} + '    Brand: ' + ${p.brand}">Sick skiglasses</p>
             <p id="productprice" class="producttext" th:text="'Price: ' + ${p.price} + ' sek'">Price: </p>
             <button class="add-to-cart">Add to cart</button>
         </div>
+
+
 
         <!-- Här kan du lägga till fler produkter -->
     </section>

@@ -73,6 +73,11 @@ public class UserServiceController {
         return "loginsite";
     }
 
+    @GetMapping("index")
+    public String indexSite(){
+        return "loginsite";
+    }
+
     @PostMapping("verifyuser")
     public String verifyMethod(@RequestParam("token") String token, Model model){
         if (userservice.verifyToken(token)){

@@ -28,12 +28,25 @@ public class ShopController {
         return "index";
     }
 
+    @GetMapping("/searchpage")
+    public String doSearch() {
+        return "searchpage";
+    }
+
     @PostMapping("/sort")
     public String sortProducts(@RequestParam String sort, Model model) {
         List<Products> allProducts = productService.fetchAllProducts();
 
         model.addAttribute("allproducts", productService.sortProducts(allProducts, sort));
         return "index";
+    }
+
+    @PostMapping("/search")
+    public String searchProduct(@RequestParam String searchItem, Model model) {
+        List<Products> p = productService.findings(searchItem);
+
+        model.addAttribute("searchItem", productService.sortProducts(p,"alphabetical"));
+        return "searchpage";
     }
 
 }

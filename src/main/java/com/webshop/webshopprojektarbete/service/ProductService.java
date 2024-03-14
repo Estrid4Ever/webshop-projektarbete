@@ -5,6 +5,7 @@ import com.webshop.webshopprojektarbete.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -17,6 +18,28 @@ public class ProductService {
 
     public List<Products> fetchAllProducts() {
         return productRepo.findAll();
+    }
+    public List<Products> findByName(String s){
+        return productRepo.findByName(s);
+    }
+    public List<Products> findByBrand(String s){
+        return productRepo.findByBrand(s);
+    }
+    public List<Products> findByColor(String s){
+        return productRepo.findByColor(s);
+    }
+    public List<Products> findings(String s){
+        List<Products> found = new ArrayList<>();
+        for (int i = 0; i < findByBrand(s).size(); i++) {
+            found.add(findByBrand(s).get(i));
+        }
+        for (int i = 0; i < findByName(s).size(); i++) {
+            found.add(findByName(s).get(i));
+        }
+        for (int i = 0; i < findByColor(s).size(); i++) {
+            found.add(findByColor(s).get(i));
+        }
+        return found;
     }
 
     public List<Products> sortProducts(List<Products> allProducts, String sortType) {
