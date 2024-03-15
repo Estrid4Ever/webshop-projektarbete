@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .cartitem {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #name-price {
+            flex: 2;
+        }
+
+        #amount-buttons {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-item-button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        #xbutton {
+            background-color: #dc3545;
+        }
+
+        #cart-item-price {
+            font-weight: bold;
+        }
+
+        #cart-item-amount {
+            margin: 0;
+            font-weight: bold;
+        }
+
+        #xbutton:hover,
+        .cart-item-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h1>Checkout</h1>
+<div th:each="item : ${shoppingcart}" class="cartitem">
+    <div id="name-price">
+        <p id="cart-item-name" th:text="${item.getKey().getName()}">Name</p>
+        <p id="cart-item-price" th:text="${item.getKey().getPrice()} + ' sek'">Price</p>
+    </div>
+
+    <div id="amount-buttons">
+        <a th:href="@{'/add-to-cart-checkout?item-id=' + ${item.getKey().id}}" class="cart-item-button">➕</a>
+        <p id="cart-item-amount" th:text="${item.value}">Amount</p>
+        <a th:href="@{'/remove-from-cart?item-id=' + ${item.getKey().id}
+                         + '&amount=' + '1'}" class="cart-item-button">➖</a>
+        <a id="xbutton" th:href="@{'/remove-from-cart?item-id=' + ${item.getKey().id}
+                        + '&amount=' + ${item.value}}" class="cart-item-button">❌</a>
+    </div>
+
+</div>
+<form method="post" action="/placeorder">
+
+    <div>
+        <p id="total" th:text="${total}"></p>
+    </div>
+
+    <input type="text" name="firstname" placeholder="firstname" id="firstname_field">
+    <input type="text" name="lastname" placeholder="firstname" id="lastname_field">
+    <input type="text" name="adress" placeholder="adress" id="adress_field">
+    <input type="text" name="postadress" placeholder="postadress" id="postadress_field">
+    <input type="number" name="postnumber" placeholder="postnumber" id="postnumber_field">
+
+    <input type="submit" value="Place Order">
+
+    <p> Email verification will be sent to: <span th:text="${confirmation_receiver}"></span></p>
+
+
+</form>
+</body>
+</html>
