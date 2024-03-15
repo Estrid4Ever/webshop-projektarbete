@@ -24,6 +24,11 @@ public class UsersServiceImpl implements UserService{
     @Autowired
     public EmailService emailService;
 
+    public String userId;
+
+    public UsersServiceImpl() {
+        this.userId = "";
+    }
 
     @Override
     public Status saveUser(Users users) {
@@ -79,6 +84,7 @@ public class UsersServiceImpl implements UserService{
             byte enabledStatus = a.getEnabled();
             if (enabledStatus == (byte) 1){
                 if (password.equals(a.getPassword())){
+                    userId = email;
                     status = Status.USER_IS_ENABLED;
                 } else {
                     status = Status.WRONG_DETAILS;
@@ -144,5 +150,9 @@ public class UsersServiceImpl implements UserService{
         }
 
 
+    }
+
+    public String getUserId() {
+        return userId;
     }
 }

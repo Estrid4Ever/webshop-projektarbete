@@ -3,10 +3,12 @@ package com.webshop.webshopprojektarbete.entity;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
+@Table(name = "customer_order")
 public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -27,6 +29,17 @@ public class Order {
     private Users usersByUserId;
     @OneToMany(mappedBy = "orderByOrderId")
     private Collection<Orderline> orderlinesById;
+
+    public Order() {
+    }
+
+    public Order(String userId, Object status, LocalDateTime orderTime, Users usersByUserId) {
+        this.userId = userId;
+        this.status = status;
+        this.orderTime = Timestamp.valueOf(orderTime);
+        this.usersByUserId = usersByUserId;
+    }
+
 
     public int getId() {
         return id;

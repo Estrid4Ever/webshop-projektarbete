@@ -3,6 +3,7 @@ package com.webshop.webshopprojektarbete.ui;
 import com.webshop.webshopprojektarbete.Status;
 import com.webshop.webshopprojektarbete.entity.Users;
 import com.webshop.webshopprojektarbete.service.UserService;
+import com.webshop.webshopprojektarbete.service.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,8 @@ import java.util.function.ToDoubleBiFunction;
 public class UserServiceController {
     @Autowired
     UserService userservice;
+    @Autowired
+    UsersServiceImpl usersService;
 
     @PostMapping("newUserMVC") //url fråm formulär
     public String adderMethod(@RequestParam String name,//från formulär
@@ -70,6 +73,7 @@ public class UserServiceController {
     }
     @GetMapping("loginsite")
     public String login(){
+        System.out.println();
         return "loginsite";
     }
 

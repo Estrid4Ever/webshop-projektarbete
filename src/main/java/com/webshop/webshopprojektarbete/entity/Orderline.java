@@ -28,6 +28,30 @@ public class Orderline {
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     private Products productsByProductId;
 
+    public Orderline(int orderId, int productId, int quantity) {
+        this.orderId = orderId;
+        this.productId = productId;
+        this.quantity = quantity;
+    }
+
+    public Orderline(int orderId, int productId, int quantity, Order orderByOrderId, Products productsByProductId) {
+        this.orderId = orderId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.orderByOrderId = orderByOrderId;
+        this.productsByProductId = productsByProductId;
+    }
+
+    public Orderline(int orderId, int productId, int quantity, Order orderByOrderId) {
+        this.orderId = orderId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.orderByOrderId = orderByOrderId;
+    }
+
+    public Orderline() {
+    }
+
     public int getId() {
         return id;
     }
