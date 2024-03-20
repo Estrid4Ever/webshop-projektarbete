@@ -39,7 +39,7 @@
         }
 
         #xbutton {
-            background-color: #dc3545;
+            background-color: rgba(218, 106, 117, 0.51);
         }
 
         #cart-item-price {
@@ -68,9 +68,9 @@
     <div id="amount-buttons">
         <a th:href="@{'/add-to-cart-checkout?item-id=' + ${item.getKey().id}}" class="cart-item-button">➕</a>
         <p id="cart-item-amount" th:text="${item.value}">Amount</p>
-        <a th:href="@{'/remove-from-cart?item-id=' + ${item.getKey().id}
+        <a th:href="@{'/remove-from-cart-checkout?item-id=' + ${item.getKey().id}
                          + '&amount=' + '1'}" class="cart-item-button">➖</a>
-        <a id="xbutton" th:href="@{'/remove-from-cart?item-id=' + ${item.getKey().id}
+        <a id="xbutton" th:href="@{'/remove-from-cart-checkout?item-id=' + ${item.getKey().id}
                         + '&amount=' + ${item.value}}" class="cart-item-button">❌</a>
     </div>
 
@@ -81,11 +81,11 @@
         <p id="total" th:text="${total}"></p>
     </div>
 
-    <input type="text" name="firstname" placeholder="firstname" id="firstname_field">
-    <input type="text" name="lastname" placeholder="firstname" id="lastname_field">
-    <input type="text" name="adress" placeholder="adress" id="adress_field">
-    <input type="text" name="postadress" placeholder="postadress" id="postadress_field">
-    <input type="number" name="postnumber" placeholder="postnumber" id="postnumber_field">
+    <input type="text" name="firstname" placeholder="firstname" id="firstname_field" required>
+    <input type="text" name="lastname" placeholder="firstname" id="lastname_field" required>
+    <input type="text" name="adress" placeholder="adress" id="adress_field" required>
+    <input type="text" name="postadress" placeholder="postadress" id="postadress_field" required>
+    <input type="number" name="postnumber" placeholder="postnumber" id="postnumber_field" required>
 
     <input type="submit" value="Place Order">
 

@@ -31,6 +31,9 @@ public class CheckOutController {
         model.addAttribute("total", cartTotal);
         model.addAttribute("shoppingcart", checkOutService.getShoppingCart());
         model.addAttribute("confirmation_receiver", receiver);
+        if (shoppingCartService.getShoppingCart().isEmpty()){
+            return "/emptycartredirectpage";
+        }
         return "checkoutpage";
     }
     @PostMapping("/placeorder")
@@ -55,6 +58,9 @@ public class CheckOutController {
 
         for (int i = 0; i < removeAmount; i++) {
             shoppingCartService.removeProductFromCart(Integer.parseInt(itemId));
+        }
+        if (shoppingCartService.getShoppingCart().isEmpty()){
+            return "/emptycartredirectpage";
         }
         return checkout(model);
     }
