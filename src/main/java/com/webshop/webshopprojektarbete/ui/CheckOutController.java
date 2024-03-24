@@ -41,7 +41,7 @@ public class CheckOutController {
         orderService.placeNewOrder(usersService.getUserId(), checkOutService.getShoppingCart());
         String verificationEmail = usersService.getUserId();
         model.addAttribute("receiver", verificationEmail);
-        //TODO Om kundvagn e tom ska vi inte kunna lägga beställning..
+
         return "confirmationpage";
     }
     @GetMapping("/add-to-cart-checkout")
