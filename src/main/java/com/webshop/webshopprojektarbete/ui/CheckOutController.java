@@ -47,6 +47,8 @@ public class CheckOutController {
         model.addAttribute("receiver", verificationEmail);
 
         emailService.sendOrderVerification(verificationEmail, shoppingCartService.getShoppingCart());
+        shoppingCartService.clearShoppingCart();
+        usersService.resetUserData();
         return "confirmationpage";
     }
     @GetMapping("/add-to-cart-checkout")

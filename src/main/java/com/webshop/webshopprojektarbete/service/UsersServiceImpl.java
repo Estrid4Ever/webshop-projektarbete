@@ -154,6 +154,10 @@ public class UsersServiceImpl implements UserService{
 
 
     }
+    public void resetUserData() {
+        // Återställ userData till sitt ursprungliga tillstånd
+        this.users = new Users(); // Antag att du har en konstruktor eller en metod för att återställa userData
+    }
 
     public Users getUsers() {
         return users;

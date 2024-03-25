@@ -9,6 +9,12 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .cartitem {
@@ -31,15 +37,16 @@
         }
 
         .cart-item-button {
-            padding: 5px 10px;
+            padding: 8px 12px;
             background-color: #007bff;
             color: #fff;
             text-decoration: none;
             border-radius: 5px;
+            transition: background-color 0.3s;
         }
 
         #xbutton {
-            background-color: rgba(218, 106, 117, 0.51);
+            background-color: #dc3545;
         }
 
         #cart-item-price {
@@ -47,51 +54,84 @@
         }
 
         #cart-item-amount {
-            margin: 0;
             font-weight: bold;
+            margin: 0;
         }
 
-        #xbutton:hover,
         .cart-item-button:hover {
             background-color: #0056b3;
+        }
+
+        form {
+            margin-top: 20px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 <h1>Checkout</h1>
-<div th:each="item : ${shoppingcart}" class="cartitem">
-    <div id="name-price">
-        <p id="cart-item-name" th:text="${item.getKey().getName()}">Name</p>
-        <p id="cart-item-price" th:text="${item.getKey().getPrice()} + ' sek'">Price</p>
+<div>
+    <div th:each="item : ${shoppingcart}" class="cartitem">
+        <div id="name-price">
+            <p id="cart-item-name" th:text="${item.getKey().getName()}">Name</p>
+            <p id="cart-item-price" th:text="${item.getKey().getPrice()} + ' sek'">Price</p>
+        </div>
+
+        <div id="amount-buttons">
+            <a th:href="@{'/add-to-cart-checkout?item-id=' + ${item.getKey().id}}" class="cart-item-button">➕</a>
+            <p id="cart-item-amount" th:text="${item.value}">Amount</p>
+            <a th:href="@{'/remove-from-cart-checkout?item-id=' + ${item.getKey().id}
+                             + '&amount=' + '1'}" class="cart-item-button">➖</a>
+            <a id="xbutton" th:href="@{'/remove-from-cart-checkout?item-id=' + ${item.getKey().id}
+                            + '&amount=' + ${item.value}}" class="cart-item-button">❌</a>
+        </div>
     </div>
 
-    <div id="amount-buttons">
-        <a th:href="@{'/add-to-cart-checkout?item-id=' + ${item.getKey().id}}" class="cart-item-button">➕</a>
-        <p id="cart-item-amount" th:text="${item.value}">Amount</p>
-        <a th:href="@{'/remove-from-cart-checkout?item-id=' + ${item.getKey().id}
-                         + '&amount=' + '1'}" class="cart-item-button">➖</a>
-        <a id="xbutton" th:href="@{'/remove-from-cart-checkout?item-id=' + ${item.getKey().id}
-                        + '&amount=' + ${item.value}}" class="cart-item-button">❌</a>
-    </div>
+    <form method="post" action="/placeorder">
+        <div id="total" th:text="${total}"></div>
 
+        <input type="text" name="firstname" th:value="${firstname}" placeholder="First Name" required>
+        <input type="text" name="lastname" th:value="${lastname}" placeholder="Last Name" required>
+        <input type="text" name="address" placeholder="Address" required>
+        <input type="text" name="postaladdress" placeholder="Postal Address" required>
+        <input type="number" name="postalcode" placeholder="Postal Code" required>
+
+        <input type="submit" value="Place Order">
+
+        <p>Email verification will be sent to: <span th:text="${confirmation_receiver}"></span></p>
+    </form>
 </div>
-<form method="post" action="/placeorder">
-
-    <div>
-        <p id="total" th:text="${total}"></p>
-    </div>
-
-    <input type="text" name="firstname" th:value="${firstname}" placeholder="firstname" id="firstname_field" required>
-    <input type="text" name="lastname" th:value="${lastname}" placeholder="lastname" id="lastname_field" required>
-    <input type="text" name="adress" placeholder="adress" id="adress_field" required>
-    <input type="text" name="postadress" placeholder="postadress" id="postadress_field" required>
-    <input type="number" name="postnumber" placeholder="postnumber" id="postnumber_field" required>
-
-    <input type="submit" value="Place Order">
-
-    <p> Email verification will be sent to: <span th:text="${confirmation_receiver}"></span></p>
-
-
-</form>
 </body>
 </html>
