@@ -73,7 +73,6 @@ public class UserServiceController {
     }
     @GetMapping("loginsite")
     public String login(){
-        System.out.println();
         return "loginsite";
     }
 

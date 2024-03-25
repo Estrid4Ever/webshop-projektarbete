@@ -28,6 +28,9 @@ public class CheckOutController {
 
     @GetMapping("/checkout")
     public String checkout(Model model) {
+        if (usersService.getUsers() == null){
+            return "user_error_page";
+        }
         String receiver = usersService.getUsers().getEmail();
         String cartTotal = shoppingCartService.getShoppingCartTotal();
         model.addAttribute("total", cartTotal);
@@ -42,6 +45,9 @@ public class CheckOutController {
     }
     @PostMapping("/placeorder")
     public String placeOrder(Model model){
+        if (usersService.getUsers().getEmail() == null){
+            return "user_error_page";
+        }
         orderService.placeNewOrder(usersService.getUsers().getEmail(), checkOutService.getShoppingCart());
         String verificationEmail = usersService.getUsers().getEmail();
         model.addAttribute("receiver", verificationEmail);
@@ -49,6 +55,7 @@ public class CheckOutController {
         emailService.sendOrderVerification(verificationEmail, shoppingCartService.getShoppingCart());
         shoppingCartService.clearShoppingCart();
         usersService.resetUserData();
+
         return "confirmationpage";
     }
     @GetMapping("/add-to-cart-checkout")
