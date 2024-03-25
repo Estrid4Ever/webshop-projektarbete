@@ -8,6 +8,7 @@ import com.webshop.webshopprojektarbete.repository.ConfirmationRepo;
 import com.webshop.webshopprojektarbete.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.Optional;
 import java.util.Random;
@@ -15,6 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
+@SessionScope
 public class UsersServiceImpl implements UserService{
 
     @Autowired
@@ -24,10 +26,10 @@ public class UsersServiceImpl implements UserService{
     @Autowired
     public EmailService emailService;
 
-    public String userId;
+    public Users users;
 
     public UsersServiceImpl() {
-        this.userId = "";
+        this.users = null;
     }
 
     @Override
@@ -35,6 +37,7 @@ public class UsersServiceImpl implements UserService{
         Status checkStatus = checkIfExist(users.getEmail());
         if (checkStatus == Status.USER_IS_NOT_ENABLED){
             Users usero = userRepository.findByEmailIgnoreCase(users.getEmail());
+            users = usero;
             String userId = usero.getEmail();
             sendNewToken(users.getEmail(), userId);
             System.out.println("inte verifierad");
@@ -84,7 +87,7 @@ public class UsersServiceImpl implements UserService{
             byte enabledStatus = a.getEnabled();
             if (enabledStatus == (byte) 1){
                 if (password.equals(a.getPassword())){
-                    userId = email;
+                    users = a;
                     status = Status.USER_IS_ENABLED;
                 } else {
                     status = Status.WRONG_DETAILS;
@@ -100,7 +103,7 @@ public class UsersServiceImpl implements UserService{
         return status;
     }
     private void sendConfirmationKey(String mail, String token){
-        emailService.sendSimpleMailMessage(mail, token);
+        emailService.sendVerificationToken(mail, token);
     }
     @Override
     public Status checkIfExist(String email){
@@ -152,7 +155,7 @@ public class UsersServiceImpl implements UserService{
 
     }
 
-    public String getUserId() {
-        return userId;
+    public Users getUsers() {
+        return users;
     }
 }

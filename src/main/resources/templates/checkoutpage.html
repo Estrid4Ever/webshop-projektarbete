@@ -81,8 +81,8 @@
         <p id="total" th:text="${total}"></p>
     </div>
 
-    <input type="text" name="firstname" placeholder="firstname" id="firstname_field" required>
-    <input type="text" name="lastname" placeholder="firstname" id="lastname_field" required>
+    <input type="text" name="firstname" th:value="${firstname}" placeholder="firstname" id="firstname_field" required>
+    <input type="text" name="lastname" th:value="${lastname}" placeholder="lastname" id="lastname_field" required>
     <input type="text" name="adress" placeholder="adress" id="adress_field" required>
     <input type="text" name="postadress" placeholder="postadress" id="postadress_field" required>
     <input type="number" name="postnumber" placeholder="postnumber" id="postnumber_field" required>

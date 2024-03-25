@@ -111,4 +111,16 @@ public class Products {
     public void setOrderlinesById(Collection<Orderline> orderlinesById) {
         this.orderlinesById = orderlinesById;
     }
+
+    @Override
+    public String toString() {
+        return "Products{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", color='" + color + '\'' +
+                ", size=" + size +
+                ", brand='" + brand + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

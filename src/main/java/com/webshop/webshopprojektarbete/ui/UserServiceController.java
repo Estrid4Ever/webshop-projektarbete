@@ -55,7 +55,7 @@ public class UserServiceController {
                 model.addAttribute("validationstatus", "Not registered!");
                 return "loginsite";
             }
-            case USER_IS_NOT_ENABLED -> {
+            case USER_IS_NOT_ENABLED -> { //skickar ny verifieringskod till användaren
                 model.addAttribute("userinfo", email);
                 return "verifypage";
             }

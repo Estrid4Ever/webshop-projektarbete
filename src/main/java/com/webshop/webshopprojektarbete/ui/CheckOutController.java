@@ -22,15 +22,19 @@ public class CheckOutController {
     UsersServiceImpl usersService;
     @Autowired
     ShoppingCartService shoppingCartService;
+    @Autowired
+    EmailService emailService;
 
 
     @GetMapping("/checkout")
     public String checkout(Model model) {
-        String receiver = usersService.getUserId();
+        String receiver = usersService.getUsers().getEmail();
         String cartTotal = shoppingCartService.getShoppingCartTotal();
         model.addAttribute("total", cartTotal);
         model.addAttribute("shoppingcart", checkOutService.getShoppingCart());
         model.addAttribute("confirmation_receiver", receiver);
+        model.addAttribute("firstname", usersService.getUsers().getName());
+        model.addAttribute("lastname", usersService.getUsers().getLastname());
         if (shoppingCartService.getShoppingCart().isEmpty()){
             return "/emptycartredirectpage";
         }
@@ -38,10 +42,11 @@ public class CheckOutController {
     }
     @PostMapping("/placeorder")
     public String placeOrder(Model model){
-        orderService.placeNewOrder(usersService.getUserId(), checkOutService.getShoppingCart());
-        String verificationEmail = usersService.getUserId();
+        orderService.placeNewOrder(usersService.getUsers().getEmail(), checkOutService.getShoppingCart());
+        String verificationEmail = usersService.getUsers().getEmail();
         model.addAttribute("receiver", verificationEmail);
 
+        emailService.sendOrderVerification(verificationEmail, shoppingCartService.getShoppingCart());
         return "confirmationpage";
     }
     @GetMapping("/add-to-cart-checkout")

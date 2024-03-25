@@ -20,7 +20,6 @@ public class CheckOutService {
     }
 
 
-
     public Hashtable<Products, Integer> getShoppingCart() {
         return shoppingCart;
     }
