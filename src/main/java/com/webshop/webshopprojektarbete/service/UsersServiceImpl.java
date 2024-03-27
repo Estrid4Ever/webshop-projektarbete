@@ -14,6 +14,8 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.codec.digest.DigestUtils;
+
 
 @Component
 @SessionScope
@@ -45,7 +47,7 @@ public class UsersServiceImpl implements UserService{
         } else if (checkStatus == Status.USER_NOT_REGISTERED) {
             users.setEnabled((byte) 0);
             users.setIsAdmin((byte) 0);
-            userRepository.save(users);
+            hashPasswordAndSave(users);
 
             Confirmation confirmation = new Confirmation(users);
             confirmationRepository.save(confirmation);
@@ -59,6 +61,12 @@ public class UsersServiceImpl implements UserService{
 
         /* SEND EMAIL TO USER WITH TOKEN*/
 
+    }
+    public void hashPasswordAndSave(Users users){
+        String password = users.getPassword();
+        String hashed = DigestUtils.sha256Hex(password);
+        users.setPassword(hashed);
+        userRepository.save(users);
     }
     @Override
     public boolean checkEmailFormat(String email){
@@ -83,10 +91,11 @@ public class UsersServiceImpl implements UserService{
         Status status = null;
         Users a = userRepository.findByEmailIgnoreCase(email);
         if (a!= null){
+            String hashedPassword = hashValidation(password);
 
             byte enabledStatus = a.getEnabled();
             if (enabledStatus == (byte) 1){
-                if (password.equals(a.getPassword())){
+                if (hashedPassword.equals(a.getPassword())){
                     users = a;
                     status = Status.USER_IS_ENABLED;
                 } else {
@@ -101,6 +110,9 @@ public class UsersServiceImpl implements UserService{
             status = Status.USER_NOT_REGISTERED;
         }
         return status;
+    }
+    private String hashValidation(String password){
+        return DigestUtils.sha256Hex(password);
     }
     private void sendConfirmationKey(String mail, String token){
         emailService.sendVerificationToken(mail, token);
