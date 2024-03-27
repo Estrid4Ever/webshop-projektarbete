@@ -61,7 +61,7 @@ public class CheckOutController {
     @GetMapping("/add-to-cart-checkout")
     public String addItemToCart(@RequestParam("item-id") String itemId, Model model) {
         shoppingCartService.addProductToCart(Integer.parseInt(itemId));
-        return checkout(model);
+        return "redirect:/checkout";
     }
 
     @GetMapping("/remove-from-cart-checkout")
@@ -76,6 +76,6 @@ public class CheckOutController {
         if (shoppingCartService.getShoppingCart().isEmpty()){
             return "/emptycartredirectpage";
         }
-        return checkout(model);
+        return "redirect:/checkout";
     }
 }

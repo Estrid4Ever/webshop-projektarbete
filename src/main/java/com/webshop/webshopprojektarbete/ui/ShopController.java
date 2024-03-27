@@ -68,7 +68,7 @@ public class ShopController {
     @GetMapping("/add-to-cart")
     public String addItemToCart(@RequestParam("item-id") String itemId, Model model) {
         shoppingCartService.addProductToCart(Integer.parseInt(itemId));
-        return doGet(model);
+        return "redirect:/";
     }
 
     @GetMapping("/remove-from-cart")
@@ -80,6 +80,6 @@ public class ShopController {
         for (int i = 0; i < removeAmount; i++) {
             shoppingCartService.removeProductFromCart(Integer.parseInt(itemId));
         }
-        return doGet(model);
+        return "redirect:/";
     }
 }
