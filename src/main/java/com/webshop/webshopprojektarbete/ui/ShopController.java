@@ -60,9 +60,9 @@ public class ShopController {
     @GetMapping("/clear-cart")
     public String clearCart(Model model) {
         shoppingCartService.clearShoppingCart();
-        List<Products> allProducts = productService.fetchAllProducts();
-        model.addAttribute("allproducts", allProducts);
-        return "index";
+        /*List<Products> allProducts = productService.fetchAllProducts();
+        model.addAttribute("allproducts", allProducts);*/
+        return "redirect:/";
     }
 
     @GetMapping("/add-to-cart")

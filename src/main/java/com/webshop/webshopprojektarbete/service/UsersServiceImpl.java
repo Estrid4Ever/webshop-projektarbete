@@ -22,13 +22,13 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class UsersServiceImpl implements UserService{
 
     @Autowired
-    UserRepo userRepository;
+    private UserRepo userRepository;
     @Autowired
-    ConfirmationRepo confirmationRepository;
+    private ConfirmationRepo confirmationRepository;
     @Autowired
-    public EmailService emailService;
+    private EmailService emailService;
 
-    public Users users;
+    private Users users;
 
     public UsersServiceImpl() {
         this.users = null;
@@ -38,9 +38,9 @@ public class UsersServiceImpl implements UserService{
     public Status saveUser(Users users) {
         Status checkStatus = checkIfExist(users.getEmail());
         if (checkStatus == Status.USER_IS_NOT_ENABLED){
-            Users usero = userRepository.findByEmailIgnoreCase(users.getEmail());
-            users = usero;
-            String userId = usero.getEmail();
+            Optional<Users> usero = userRepository.findByEmailIgnoreCase(users.getEmail());
+            users = usero.get();
+            String userId = usero.get().getEmail();
             sendNewToken(users.getEmail(), userId);
             System.out.println("inte verifierad");
             return Status.USER_IS_ENABLED;
@@ -89,9 +89,15 @@ public class UsersServiceImpl implements UserService{
     @Override
     public Status validateLogin(String email, String password){
         Status status = null;
+<<<<<<< Updated upstream
         Users a = userRepository.findByEmailIgnoreCase(email);
         if (a!= null){
             String hashedPassword = hashValidation(password);
+=======
+        Optional<Users> optionalUser = fetchOptionalUser(email);
+        if (optionalUser.isPresent()){
+            Users a = optionalUser.get();
+>>>>>>> Stashed changes
 
             byte enabledStatus = a.getEnabled();
             if (enabledStatus == (byte) 1){
@@ -121,7 +127,7 @@ public class UsersServiceImpl implements UserService{
     public Status checkIfExist(String email){
         Status status = null;
         if (userRepository.existsByEmail(email)){
-            byte isEnabled = userRepository.findByEmailIgnoreCase(email).getEnabled();
+            byte isEnabled = fetchOptionalUser(email).get().getEnabled();
             if (isEnabled == (byte) 0){
                 status = Status.USER_IS_NOT_ENABLED;
             }
@@ -148,7 +154,14 @@ public class UsersServiceImpl implements UserService{
         if (confirmation.isPresent()){
             Confirmation foundConfirmation = confirmation.get();
             String foundToken = foundConfirmation.getToken();
-            Users user = userRepository.findByEmailIgnoreCase(foundConfirmation.getUsersByUserId().getEmail());
+            Optional<Users> optionalUser = userRepository.findByEmailIgnoreCase(foundConfirmation.getUsersByUserId().getEmail());
+            if (optionalUser.isEmpty()){
+                System.out.println("Felaktig mail!");
+                return false;
+            }
+
+            Users user = optionalUser.get();
+
             if (token.equals(foundToken)){
                 user.setEnabled((byte) 1);
                 userRepository.save(user);
@@ -173,5 +186,13 @@ public class UsersServiceImpl implements UserService{
 
     public Users getUsers() {
         return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
+    }
+
+    public Optional<Users> fetchOptionalUser(String email) {
+        return userRepository.findByEmailIgnoreCase(email);
     }
 }

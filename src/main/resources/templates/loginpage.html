@@ -21,9 +21,14 @@
             text-align: center;
         }
 
+        .formcontainer {
+            display: flex;
+            justify-content: center;
+        }
+
         input[type="text"], input[type="password"], input[type="submit"] {
             padding: 10px;
-            margin: 5px;
+            margin-bottom: 10px;
             width: 100%;
             box-sizing: border-box;
             border: 1px solid #ccc;
@@ -45,18 +50,30 @@
             border-radius: 5px;
             display: inline-block;
         }
+
+        #newuser {
+            color: rgba(51, 51, 51, 0.80);
+        }
+
+        #validationtext {
+            color: #dc3545;
+        }
     </style>
 </head>
 <body>
 <div class="login-container">
     <h1>Login</h1>
-    <form method="post" action="/validateUserLogin">
-        <input type="text" name="email" value="" placeholder="Email" required> <br/>
-        <input type="password" name="password" value="" placeholder="Password" required> <br/>
-        <input type="submit" value="Login"><br/>
-    </form>
-    <p>New user? <a class="register-btn" href="http://localhost:8080/addnewuser.html">Register here!</a></p>
-    <p><span th:text="${validationstatus}"></span></p>
+    <div class="formcontainer">
+        <form method="post" action="/login">
+            <input type="text" name="username" value="" placeholder="Email" required> <br/>
+            <input type="password" name="password" value="" placeholder="Password" required>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <br/>
+            <input type="submit" value="Login"><br/>
+        </form>
+    </div>
+    <p id="newuser">New user? <a class="register-btn" href="/addnewuser">Register here!</a></p>
+    <p><span id="validationtext" th:text="${validationstatus}"></span></p>
 </div>
 </body>
 </html>

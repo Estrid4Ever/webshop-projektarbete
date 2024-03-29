@@ -31,10 +31,14 @@
         input {
             width: calc(100% - 22px);
             padding: 10px;
-            margin: 8px 0;
+            margin-top: 6px;
+            margin-bottom: 6px;
+            margin-right: 10px;
+            margin-left: 10px;
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 4px;
+            text-align: center;
         }
 
         input[type="submit"] {
@@ -60,26 +64,28 @@
         .password-container {
             position: relative;
         }
+
+        #registertxt {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 <form method="post" action="/newUserMVC">
-    <h1>REGISTER</h1>
+    <h1 id="registertxt">REGISTER</h1>
 
     <input type="text" name="name" placeholder="Name">
     <br/>
     <input type="text" name="lastname" placeholder="Lastname">
     <br/>
     <input type="text" name="email" placeholder="Email">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <p><span th:text="${wrong_email_format}"></span></p>
-    <br/>
 
     <div class="password-container">
         <input type="password" name="password" placeholder="Password" id="passwordField">
         <span class="eye-icon" id="togglePassword">&#128065;</span>
     </div>
-
-    <br/>
 
     <input type="submit" value="Register">
 </form>

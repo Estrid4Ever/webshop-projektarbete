@@ -72,6 +72,7 @@
     <p>Verification code sent to: <span th:text="${userinfo}"></span></p>
     <label for="token">Type code below</label>
     <input type="text" id="token" name="token" placeholder="0000" required>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <input type="submit" value="Verify">
 </form>
 <p><span th:text="${codestatus}"></span></p>

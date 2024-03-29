@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Hashtable;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -24,11 +25,14 @@ public class OrderService {
 
     public void placeNewOrder(String userId, Hashtable<Products, Integer> orderedItems){
 
-        Users a = userRepo.findByEmailIgnoreCase(userId);
-        Order o = new Order(a.getEmail(),"RECIEVED", LocalDateTime.now(),a);
-        orderRepo.save(o);
-        newOrderLine(o, orderedItems);
-        System.out.println("order: " + o);
+        Optional<Users> optionalUsers = userRepo.findByEmailIgnoreCase(userId);
+        if (optionalUsers.isPresent()) {
+            Users a = optionalUsers.get();
+            Order o = new Order(a.getEmail(), "RECIEVED", LocalDateTime.now(), a);
+            orderRepo.save(o);
+            newOrderLine(o, orderedItems);
+            System.out.println("order: " + o);
+        }
 
     }
     public void newOrderLine(Order o, Hashtable<Products, Integer> orderedItems){

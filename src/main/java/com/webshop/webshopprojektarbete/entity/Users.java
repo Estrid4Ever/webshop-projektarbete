@@ -1,6 +1,7 @@
 package com.webshop.webshopprojektarbete.entity;
 
 import jakarta.persistence.*;
+import org.springframework.context.annotation.Bean;
 
 import java.util.Collection;
 import java.util.Objects;
