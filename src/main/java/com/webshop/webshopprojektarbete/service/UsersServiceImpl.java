@@ -89,15 +89,11 @@ public class UsersServiceImpl implements UserService{
     @Override
     public Status validateLogin(String email, String password){
         Status status = null;
-<<<<<<< Updated upstream
-        Users a = userRepository.findByEmailIgnoreCase(email);
-        if (a!= null){
-            String hashedPassword = hashValidation(password);
-=======
+
         Optional<Users> optionalUser = fetchOptionalUser(email);
         if (optionalUser.isPresent()){
             Users a = optionalUser.get();
->>>>>>> Stashed changes
+            String hashedPassword = hashValidation(password);
 
             byte enabledStatus = a.getEnabled();
             if (enabledStatus == (byte) 1){

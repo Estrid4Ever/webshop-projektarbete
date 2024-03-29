@@ -1,18 +1,13 @@
 package com.webshop.webshopprojektarbete.service;
 
 import com.webshop.webshopprojektarbete.entity.Users;
-import com.webshop.webshopprojektarbete.repository.UserRepo;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.SessionScope;
-
 import java.util.Collections;
 import java.util.Optional;
 
