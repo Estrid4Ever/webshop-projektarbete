@@ -43,14 +43,14 @@
     <h1>Order completed</h1>
     <p>Verification email sent to <span th:text="${receiver}"></span></p>
     <p>Thanks for shopping at SOLGLAJJER!</p>
-    <p>Redirecting to <a href="http://localhost:8080/loginsite">home page</a>...</p>
+    <p>Redirecting to <a href="/loginsite">home page</a>...</p>
 
 </div>
 
 <script>
     // Redirect after a delay (e.g., 3000 milliseconds = 3 seconds)
     setTimeout(function() {
-        window.location.href = "../static/loginpagestatic.html";
+        window.location.href = "/loginsite";
     }, 3500);
 </script>
 </body>

@@ -45,9 +45,11 @@ public class CheckOutController {
     }
     @PostMapping("/placeorder")
     public String placeOrder(Model model){
+
         if (usersService.getUsers().getEmail() == null){
             return "user_error_page";
         }
+
         orderService.placeNewOrder(usersService.getUsers().getEmail(), checkOutService.getShoppingCart());
         String verificationEmail = usersService.getUsers().getEmail();
         model.addAttribute("receiver", verificationEmail);

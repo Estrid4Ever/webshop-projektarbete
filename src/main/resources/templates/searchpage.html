@@ -340,6 +340,7 @@
 
     <form method="post" action="/search" style="margin-top: 20px; margin-left: 20px;">
         <input type="text" name="searchItem" value="" placeholder="Search" required style="padding: 10px; font-size: 16px; border: 2px solid #ddd; border-radius: 5px; width: 80%; max-width: 300px; box-sizing: border-box;">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <button type="submit" style="padding: 10px 20px; font-size: 16px; background-color: #4caf50; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Search</button>
     </form>
 

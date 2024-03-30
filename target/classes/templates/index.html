@@ -398,9 +398,7 @@
         <a href="#" class="nav-link">MY ACCOUNT</a>
         <a href="#" class="nav-link">CONTACT US</a>
     </nav>
-    <!--
-        <button class="shopping-cart-btn"><i class="fas fa-shopping-cart"></i></button>
-    -->
+
     <div class="cart-container">
         <button id="cartBtn" class="shopping-cart-btn"><i class="fas fa-shopping-cart"></i></button>
         <div class="cart-window" id="cartWindow" aria-placeholder="Your cart is empty">
@@ -447,6 +445,7 @@
                     <option value="Price low">Price low</option>
                     <option value="Popularity">Popularity</option>
                 </select>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             </form>
         </div>
     </div>
@@ -459,8 +458,6 @@
             <p id="productprice" class="producttext" th:text="'Price: ' + ${p.price} + ' sek'">Price: </p>
             <a th:href="@{'/add-to-cart?item-id=' + ${p.id}}"><button class="add-to-cart">Add to cart</button></a>
         </div>
-
-        <!-- Här kan du lägga till fler produkter -->
     </section>
 </main>
 <footer>

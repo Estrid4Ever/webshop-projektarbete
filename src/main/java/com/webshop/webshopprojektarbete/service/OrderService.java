@@ -26,9 +26,11 @@ public class OrderService {
     public void placeNewOrder(String userId, Hashtable<Products, Integer> orderedItems){
 
         Optional<Users> optionalUsers = userRepo.findByEmailIgnoreCase(userId);
+
         if (optionalUsers.isPresent()) {
             Users a = optionalUsers.get();
-            Order o = new Order(a.getEmail(), "RECIEVED", LocalDateTime.now(), a);
+            Order o = new Order(a.getEmail(), "RECEIVED", LocalDateTime.now(), a);
+            System.out.println("place2");
             orderRepo.save(o);
             newOrderLine(o, orderedItems);
             System.out.println("order: " + o);

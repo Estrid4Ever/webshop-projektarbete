@@ -54,6 +54,10 @@
         #newuser {
             color: rgba(51, 51, 51, 0.80);
         }
+
+        #validationtext {
+            color: #dc3545;
+        }
     </style>
 </head>
 <body>
@@ -69,7 +73,7 @@
         </form>
     </div>
     <p id="newuser">New user? <a class="register-btn" href="/addnewuser">Register here!</a></p>
-    <p><span th:text="${validationstatus}"></span></p>
+    <p><span id="validationtext" th:text="${validationstatus}"></span></p>
 </div>
 </body>
 </html>
