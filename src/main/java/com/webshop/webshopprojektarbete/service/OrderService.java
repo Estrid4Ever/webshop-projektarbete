@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,16 +26,15 @@ public class OrderService {
 
     public void placeNewOrder(String userId, Hashtable<Products, Integer> orderedItems){
 
-        Optional<Users> optionalUsers = userRepo.findByEmailIgnoreCase(userId);
-
-        if (optionalUsers.isPresent()) {
-            Users a = optionalUsers.get();
-            Order o = new Order(a.getEmail(), "RECEIVED", LocalDateTime.now(), a);
-            System.out.println("place2");
+        Optional<Users> a = userRepo.findByEmailIgnoreCase(userId);
+        if (a.isPresent()){
+            String email = a.get().getEmail();
+            Order o = new Order(email,"RECEIVED", LocalDateTime.now(),a.get());
             orderRepo.save(o);
             newOrderLine(o, orderedItems);
             System.out.println("order: " + o);
         }
+
 
     }
     public void newOrderLine(Order o, Hashtable<Products, Integer> orderedItems){
@@ -47,5 +47,18 @@ public class OrderService {
         }
 
 
+    }
+    public void markOrder(int orderId, String orderStatus) {
+        Order o = this.findOrderById(orderId);
+        o.setStatus(orderStatus);
+        this.orderRepo.save(o);
+    }
+
+    public Order findOrderById(int orderId) {
+        return this.orderRepo.findById(orderId);
+    }
+
+    public List<Order> findOrdersByStatus(String status) {
+        return this.orderRepo.findAllByStatus(status);
     }
 }

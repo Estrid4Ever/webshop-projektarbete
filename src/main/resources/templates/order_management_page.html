@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders to Handle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .order-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-gap: 20px;
+        }
+
+        .order-info {
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .order-info {
+            margin-bottom: 10px;
+        }
+
+        .orderline-container {
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .orderline {
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .order-label {
+            font-weight: bold;
+        }
+
+        .order-value {
+            font-weight: bold;
+        }
+
+        .orderline-label {
+            font-weight: bold;
+            margin-right: 10px; /* Lägg till lite utrymme till höger om etiketten */
+        }
+
+        .orderline-info {
+            display: flex; /* Använd flexbox för att placera innehållet bredvid varandra */
+            align-items: center; /* Centrera innehållet vertikalt */
+        }
+        .product-actions {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .action-button {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .action-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h1>Order Management</h1>
+<div class="order-container">
+    <div th:each="order : ${order_to_handle}" class="order">
+        <div class="order-info">
+            <p class="order-heading">Order Information</p>
+            <p><span class="order-label">Order ID:</span> <span class="order-value" th:text="${order.getId()}"></span></p>
+            <p><span class="order-label">Order Time:</span> <span class="order-value" th:text="${order.getOrderTime()}"></span></p>
+            <p><span class="order-label">Status:</span> <span class="order-value" th:text="${order.getStatus()}"></span></p>
+            <p><span class="order-label">User ID:</span> <span class="order-value" th:text="${order.getUserId()}"></span></p>
+            <div class="product-actions">
+                <form method="post" th:action="@{/mark_order}">
+                    <input type="hidden" name="order_id" th:value="${order.getId()}"/>
+                    <button type="submit" name="action" value="PENDING" class="action-button">Mark as Pending</button>
+                    <button type="submit" name="action" value="SHIPPED" class="action-button">Mark as Shipped</button>
+                    <button type="submit" name="action" value="RECEIVED" class="action-button">Mark as Received</button>
+                    <button type="submit" name="action" value="RETURN" class="action-button">RETURN TO ALL ORDERS</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div th:each="order : ${order_to_handle}" class="orderline-container">
+        <p class="order-heading">Articles</p>
+        <div th:each="orderline : ${order.getOrderlinesById()}" class="orderline">
+            <div class="orderline-info">
+                <p class="orderline-label">Article ID:</p>
+                <p class="orderline-value" th:text="${orderline.getProductsByProductId().getId()}"></p>
+            </div>
+            <div class="orderline-info">
+                <p class="orderline-label">Product Name:</p>
+                <p class="orderline-value" th:text="${orderline.getProductsByProductId().getName()}"></p>
+            </div>
+            <div class="orderline-info">
+                <p class="orderline-label">Quantity:</p>
+                <p class="orderline-value" th:text="${orderline.getQuantity()}"></p>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
