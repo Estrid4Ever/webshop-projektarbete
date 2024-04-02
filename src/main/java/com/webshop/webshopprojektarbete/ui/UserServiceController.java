@@ -25,7 +25,6 @@ public class UserServiceController {
                               @RequestParam String email,//från formulär
                               @RequestParam String password,//från formulär
                                Model model){//vi ber om detta
-        System.out.println("newUserMVC");
 
         if (userservice.isRegistered(email)) {
             // TODO: 2024-03-11 om användaren redan finns registrerad, ge felmeddelande och skicka till loggin-sidan
@@ -48,7 +47,7 @@ public class UserServiceController {
     public String userLogin(@RequestParam("username") String email,//från formulär
                             @RequestParam String password,//från formulär
                             Model model){//vi ber om detta
-        System.out.println("validateuserlogin");
+
         Status validate = userservice.validateLogin(email,password);
         // TODO: 2024-03-29 Användaren kan för tillfället skita i att verifiera sin mailadress 
 
@@ -72,8 +71,15 @@ public class UserServiceController {
 
         return email;
     }
+
+    @GetMapping("sendnewverificationcode")
+    public String sendNewVerificationCode() {
+        usersService.sendNewToken(usersService.getUsers().getEmail(), usersService.getUsers().getEmail());
+        return "redirect:/";
+    }
+
     @GetMapping("loginsite")
-    public String login(){
+    public String login(Model model){
         return "loginpage";
     }
 

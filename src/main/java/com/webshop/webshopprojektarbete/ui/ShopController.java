@@ -3,6 +3,7 @@ package com.webshop.webshopprojektarbete.ui;
 import com.webshop.webshopprojektarbete.entity.Products;
 import com.webshop.webshopprojektarbete.service.ProductService;
 import com.webshop.webshopprojektarbete.service.ShoppingCartService;
+import com.webshop.webshopprojektarbete.service.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +23,16 @@ public class ShopController {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
+    @Autowired
+    private UsersServiceImpl usersService;
+
     @GetMapping("/")
     public String doGet(Model model) {
+        if (usersService.getUsers().getEnabled() == 0) {
+            model.addAttribute("codestatus", "Your email is not verified, please enter your verification code.");
+            model.addAttribute("userinfo", usersService.getUsers().getEmail());
+            return "verifypage";
+        }
         List<Products> allProducts = productService.fetchAllProducts();
         Hashtable<Products, Integer> shoppingCart = shoppingCartService.getShoppingCart();
         String cartTotal = shoppingCartService.getShoppingCartTotal();

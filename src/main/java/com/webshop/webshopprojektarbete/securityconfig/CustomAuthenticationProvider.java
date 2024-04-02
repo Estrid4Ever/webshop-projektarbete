@@ -1,6 +1,8 @@
-package com.webshop.webshopprojektarbete.service;
+package com.webshop.webshopprojektarbete.securityconfig;
 
 import com.webshop.webshopprojektarbete.entity.Users;
+import com.webshop.webshopprojektarbete.service.UsersServiceImpl;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -11,7 +13,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Optional;
 
 @Component
@@ -30,8 +31,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication auth)
             throws AuthenticationException {
         String username = auth.getName();
-        String password = auth.getCredentials()
-                .toString();
+        String password = DigestUtils.sha256Hex(auth.getCredentials()
+                .toString());
 
         Optional<Users> optionalUser = usersService.fetchOptionalUser(username);
 
@@ -42,10 +43,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             if (user.getEmail().equals(username) && user.getPassword().equals(password)) {
                 ArrayList<SimpleGrantedAuthority> roles = new ArrayList<>();
                 roles.add(new SimpleGrantedAuthority(String.valueOf(user.getIsAdmin())));
-                System.out.println(roles.get(0));
                 return new UsernamePasswordAuthenticationToken
                         (username, password, roles);
             } else {
+                usersService.setUsers(null);
                 throw new
                         BadCredentialsException("Authentication failed");
             }

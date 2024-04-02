@@ -10,10 +10,16 @@
             background-color: #f7f7f7;
             margin: 0;
             padding: 0;
-            display: flex;
+            display: grid;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            height: 60vh;
+        }
+
+        .container {
+            display: grid;
+            align-items: center;
+            justify-content: center;
         }
 
         h1 {
@@ -27,6 +33,7 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 300px;
+            margin-top: 10vh;
         }
 
         label {
@@ -60,6 +67,10 @@
             margin-top: 16px;
         }
 
+        #newcodelink {
+            text-align: center;
+        }
+
         span {
             font-weight: bold;
             color: #007bff;
@@ -67,14 +78,19 @@
     </style>
 </head>
 <body>
-
-<form method="post" action="/verifyuser">
-    <p>Verification code sent to: <span th:text="${userinfo}"></span></p>
-    <label for="token">Type code below</label>
-    <input type="text" id="token" name="token" placeholder="0000" required>
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-    <input type="submit" value="Verify">
-</form>
-<p><span th:text="${codestatus}"></span></p>
+<div id="form" class="container">
+    <form method="post" action="/verifyuser">
+        <p>Verification code sent to: <span th:text="${userinfo}"></span></p>
+        <label for="token">Type code below</label>
+        <input type="text" id="token" name="token" placeholder="0000" required>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <input type="submit" value="Verify">
+    </form>
+</div>
+<div class="container">
+    <p><span th:text="${codestatus}"></span></p>
+    <br>
+    <a id="newcodelink" href="/sendnewverificationcode">Send new verification code</a>
+</div>
 </body>
 </html>

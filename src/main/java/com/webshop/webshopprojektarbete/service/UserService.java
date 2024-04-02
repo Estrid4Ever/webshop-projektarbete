@@ -19,4 +19,6 @@ public interface UserService {
     Boolean verifyToken(String token);
     boolean isRegistered(String email);
 
+    void sendNewToken(String email, String userId);
+
 }

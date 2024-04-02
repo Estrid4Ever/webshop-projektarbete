@@ -33,7 +33,6 @@ public class EmailServiceImpl implements EmailService {
         try{
             SimpleMailMessage message = new SimpleMailMessage();
             message.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
-            /*message.setFrom();*/
             message.setTo(to);
             message.setText("Your verification key: " + token);
             emailSender.send(message);

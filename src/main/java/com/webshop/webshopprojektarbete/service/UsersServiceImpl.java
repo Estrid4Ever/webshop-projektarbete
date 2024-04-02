@@ -80,7 +80,7 @@ public class UsersServiceImpl implements UserService{
             return false;
         }
     }
-    private void sendNewToken(String email, String userId){
+    public void sendNewToken(String email, String userId){
         Confirmation c = confirmationRepository.findByUserId(userId);
         c.setToken(generateRandomNumber());
         confirmationRepository.save(c);
@@ -162,6 +162,7 @@ public class UsersServiceImpl implements UserService{
                 user.setEnabled((byte) 1);
                 userRepository.save(user);
                 System.out.println("Rätt kod");
+                setUsers(user);
                 return Boolean.TRUE;
             } else {
                 user.setEnabled((byte) 0);

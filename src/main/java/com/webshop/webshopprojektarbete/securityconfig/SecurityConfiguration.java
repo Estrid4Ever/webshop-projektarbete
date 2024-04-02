@@ -1,5 +1,7 @@
-package com.webshop.webshopprojektarbete.service;
+package com.webshop.webshopprojektarbete.securityconfig;
 
+import com.webshop.webshopprojektarbete.securityconfig.CustomAuthenticationProvider;
+import com.webshop.webshopprojektarbete.securityconfig.CustomAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,13 +27,6 @@ public class SecurityConfiguration{
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.authenticationProvider(customAuthProvider);
 
-
-        if (customAuthProvider.getUser() != null) {
-            authenticationManagerBuilder.inMemoryAuthentication()
-                    .withUser(customAuthProvider.getUser().getEmail())
-                    .password(passwordEncoder().encode(customAuthProvider.getUser().getPassword()))
-                    .roles(String.valueOf(customAuthProvider.getUser().getIsAdmin()));
-        }
         return authenticationManagerBuilder.build();
     }
 
@@ -45,7 +40,9 @@ public class SecurityConfiguration{
                                 .requestMatchers("/addnewuser").permitAll()
                                 .requestMatchers("/newUserMVC").permitAll()
                                 .requestMatchers("/validateUserLogin").permitAll()
-                                .requestMatchers("/admin").hasAuthority("1")//lägg till samtliga adminsidor så här
+                                .requestMatchers("/admin_start_page", "/shipped_orders",
+                                        "/orders_to_handle", "/mark_order",
+                                        "/start_handling", "/allorders").hasAuthority("1")//lägg till samtliga adminsidor så här
                                 .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
