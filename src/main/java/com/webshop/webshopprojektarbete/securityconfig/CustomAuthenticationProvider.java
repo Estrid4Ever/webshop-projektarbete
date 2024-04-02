@@ -31,18 +31,19 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication auth)
             throws AuthenticationException {
         String username = auth.getName();
-        String password = DigestUtils.sha256Hex(auth.getCredentials()
-                .toString());
+        String password = DigestUtils.sha256Hex(auth.getCredentials().toString());
 
         Optional<Users> optionalUser = usersService.fetchOptionalUser(username);
 
         if (optionalUser.isPresent()) {
             user = optionalUser.get();
-            usersService.setUsers(user);
 
             if (user.getEmail().equals(username) && user.getPassword().equals(password)) {
+                usersService.setUsers(user);
+
                 ArrayList<SimpleGrantedAuthority> roles = new ArrayList<>();
                 roles.add(new SimpleGrantedAuthority(String.valueOf(user.getIsAdmin())));
+
                 return new UsernamePasswordAuthenticationToken
                         (username, password, roles);
             } else {

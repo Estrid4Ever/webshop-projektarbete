@@ -1,7 +1,5 @@
 package com.webshop.webshopprojektarbete.securityconfig;
 
-import com.webshop.webshopprojektarbete.securityconfig.CustomAuthenticationProvider;
-import com.webshop.webshopprojektarbete.securityconfig.CustomAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
