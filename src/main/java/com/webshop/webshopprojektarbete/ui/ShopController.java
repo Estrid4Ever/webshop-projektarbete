@@ -33,9 +33,27 @@ public class ShopController {
         return "index";
     }
 
-    @GetMapping("/searchpage")
-    public String doSearch() {
+    @GetMapping("/searchsite")
+    public String doSearch(Model model) {
+        Hashtable<Products, Integer> shoppingCart = shoppingCartService.getShoppingCart();
+        String cartTotal = shoppingCartService.getShoppingCartTotal();
+        model.addAttribute("total", cartTotal);
+        model.addAttribute("shoppingcart", shoppingCart);
+
         return "searchpage";
+    }
+
+    @PostMapping("/search")
+    public String searchProduct(@RequestParam String searchItem, Model model) {
+        List<Products> p = productService.findings(searchItem);
+
+        model.addAttribute("allproducts", productService.sortProducts(p, "alphabetical"));
+
+        if (p.isEmpty()) {
+            model.addAttribute("noresult", "No match for: '" + searchItem + "'");
+        }
+
+        return doSearch(model);
     }
 
     @PostMapping("/sort")
@@ -49,19 +67,10 @@ public class ShopController {
         return "index";
     }
 
-
-    @PostMapping("/search")
-    public String searchProduct(@RequestParam String searchItem, Model model) {
-        List<Products> p = productService.findings(searchItem);
-
-        model.addAttribute("searchItem", productService.sortProducts(p, "alphabetical"));
-        return "searchpage";
-    }
     @GetMapping("/clear-cart")
     public String clearCart(Model model) {
         shoppingCartService.clearShoppingCart();
-        /*List<Products> allProducts = productService.fetchAllProducts();
-        model.addAttribute("allproducts", allProducts);*/
+
         return "redirect:/";
     }
 

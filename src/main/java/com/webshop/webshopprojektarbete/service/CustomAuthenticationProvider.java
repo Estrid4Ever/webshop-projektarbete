@@ -7,7 +7,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -37,8 +40,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             usersService.setUsers(user);
 
             if (user.getEmail().equals(username) && user.getPassword().equals(password)) {
+                ArrayList<SimpleGrantedAuthority> roles = new ArrayList<>();
+                roles.add(new SimpleGrantedAuthority(String.valueOf(user.getIsAdmin())));
+                System.out.println(roles.get(0));
                 return new UsernamePasswordAuthenticationToken
-                        (username, password, Collections.emptyList());
+                        (username, password, roles);
             } else {
                 throw new
                         BadCredentialsException("Authentication failed");

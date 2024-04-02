@@ -25,6 +25,7 @@ public class SecurityConfiguration{
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.authenticationProvider(customAuthProvider);
 
+
         if (customAuthProvider.getUser() != null) {
             authenticationManagerBuilder.inMemoryAuthentication()
                     .withUser(customAuthProvider.getUser().getEmail())
@@ -44,14 +45,14 @@ public class SecurityConfiguration{
                                 .requestMatchers("/addnewuser").permitAll()
                                 .requestMatchers("/newUserMVC").permitAll()
                                 .requestMatchers("/validateUserLogin").permitAll()
-                                .requestMatchers("/admin").hasRole("1") //lägg till samtliga adminsidor så här
+                                .requestMatchers("/admin").hasAuthority("1")//lägg till samtliga adminsidor så här
                                 .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
                         .loginPage("/loginsite") // Specify the URL of the custom login page
                         .permitAll()
                         .loginProcessingUrl("/login")// Specify the custom login processing URL
-                        .defaultSuccessUrl("/", true) // Specify the success URL after successful login
+                        .successHandler(new CustomAuthenticationSuccessHandler()) // Specify the success URL after successful login
                 )
                 .authenticationManager(authManager);
         return http.build();

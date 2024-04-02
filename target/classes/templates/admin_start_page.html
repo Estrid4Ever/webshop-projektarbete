@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders to Handle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .dash-alternativ {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Fyra kolumner */
+            grid-gap: 20px; /* Avstånd mellan rutor */
+            justify-items: center; /* Centrera innehållet horisontellt */
+        }
+
+        .alternativ-type {
+            width: 200px; /* Bredden på varje ruta */
+            height: 200px; /* Höjden på varje ruta */
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .alternativ-info {
+            margin-bottom: 10px;
+        }
+
+        .action-button {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .action-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h1>Dashboard</h1>
+<div class="dash-alternativ">
+    <div class="alternativ-type">
+        <form method="get" action="/allorders">
+        <div class="alternativ-info">
+            <button type="submit" class="action-button">Show all orders</button>
+        </div>
+        </form>
+    </div>
+
+
+    <div class="alternativ-type">
+        <form method="get" action="/orders_to_handle">
+        <div class="alternativ-info">
+            <button type="submit" class="action-button">Orders to handle</button>
+        </div>
+        </form>
+    </div>
+
+
+    <div  class="alternativ-type">
+        <form method="get" action="/shipped_orders">
+        <div class="alternativ-info">
+            <button type="submit" class="action-button">Shipped orders</button>
+        </div>
+            </form>
+    </div>
+    <div  class="alternativ-type">
+        <form method="get" action="/shipped_orders">
+            <div class="alternativ-info">
+                <button type="submit" class="action-button">Pending orders</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="alternativ-type">
+        <div class="alternativ-info">
+            <button type="submit" name="action" value="PENDING" class="action-button">Add product</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -8,8 +8,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-
     <title>Webbshop</title>
+
     <style>
         /* Stilmall här */
         .headername {
@@ -213,7 +213,7 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            width: 250px;
+            width: 270px;
             background: #fff;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -233,22 +233,99 @@
         .cart-container {
             position: relative;
         }
-        #login {
-            position: absolute;
-            top: 37px;
-            right: 35px;
-            transform: translate(-50%, -50%);
-            text-align: left;
-            z-index: 1001;
-            background-color: rgba(32, 166, 162, 0.5);
-            padding: 8px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-family: 'arial', sans-serif;
-            color: #e7efef;
-            font-size: 15px;
+
+        #go-to-check-out {
+            padding: 8px 22px;
+            margin: 10px 10px 2px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #fff;
+            background: #44c51c;
             border: none;
+            border-radius: 2px;
+            cursor: pointer;
             text-decoration: none;
+        }
+
+        #clear-cart {
+            padding: 8px 22px;
+            margin: 10px 10px 2px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #fff;
+            background: rgba(203, 28, 28, 0.79);
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        #cart-options {
+            display: flex;
+            align-items: center; /* Vertically center items */
+            justify-content: center;
+        }
+
+        .cartitem {
+            display: flex;
+            align-items: stretch; /* Vertically center items */
+            justify-content: space-between;
+        }
+
+        #name-price {
+            display: flex;
+            align-items: center; /* Vertically center items */
+            justify-content: space-between;
+            text-transform: uppercase;
+            font-family: 'arial', sans-serif; /* Cool font */
+            color: rgba(94, 70, 96, 0.95);
+            font-size: 14px;
+        }
+
+        #amount-buttons {
+            display: flex;
+            align-items: center; /* Vertically center items */
+            justify-content: space-evenly;
+            text-transform: uppercase;
+            font-family: 'arial', sans-serif; /* Cool font */
+            font-size: 14px;
+            font-weight: bold;
+            color: rgba(94, 70, 96, 0.75);
+        }
+
+        .cart-item-button {
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            color: rgba(94, 70, 96, 0.75);
+            font-size: 13px;
+            text-transform: uppercase;
+            font-family: 'arial', sans-serif; /* Cool font */
+            margin-right: 3px;
+            margin-left: 3px;
+        }
+
+        #cart-item-name {
+            margin-right: 10px;
+        }
+
+        #cart-item-amount {
+            color: black;
+            cursor: default;
+            border: #5f8382;
+            padding: 4px;
+            border-radius: 3px;
+            font-size: 15px;
+            color: rgba(94, 70, 96, 0.95);
+        }
+        #xbutton {
+            margin-left: 10px;
+        }
+
+        .hr-cart {
+            color: rgba(94, 70, 96, 0.25);
         }
 
 
@@ -270,15 +347,12 @@
                 color: black;
             }
         }
-
     </style>
-
     <script>
 
         document.addEventListener("DOMContentLoaded", function() {
             const cartBtn = document.getElementById("cartBtn");
             const cartWindow = document.getElementById("cartWindow");
-            const addToCartButtons = document.querySelectorAll(".add-to-cart");
 
             cartBtn.addEventListener("click", function() {
                 cartWindow.classList.toggle("show");
@@ -290,7 +364,7 @@
                 } else {
                     cartWindow.style.opacity = "1";
                     cartWindow.style.display = "block";
-                    cartBtn.style.paddingLeft = "240px"; // Adjust padding when showing the cart window
+                    cartBtn.style.paddingLeft = "260px"; // Adjust padding when showing the cart window
                     cartBtn.style.borderRadius = "5px 5px 2px 2px";
                 }
             });
@@ -308,7 +382,6 @@
 <header>
 
     <div class="header-container">
-        <a href="/loginsite" id="login">Log in</a>
         <img id="headerimg" src="/image?path=/img/ladyglasses1.webp" alt="headerimg"/>
 
         <div class="text-overlay">
@@ -319,7 +392,7 @@
 
     <nav id="navbar">
         <a href="/" class="nav-link">HOME</a>
-        <a href="/searchpage" class="nav-link">SEARCH</a>
+        <a href="/searchsite" class="nav-link">SEARCH</a>
         <a href="#" class="nav-link">MY ACCOUNT</a>
         <a href="#" class="nav-link">CONTACT US</a>
     </nav>
@@ -330,7 +403,31 @@
         <button id="cartBtn" class="shopping-cart-btn"><i class="fas fa-shopping-cart"></i></button>
         <div class="cart-window" id="cartWindow" aria-placeholder="Your cart is empty">
             <br>
-            <p class="cartitem"></p>
+            <hr class="hr-cart">
+            <div class="cartitem" th:each="item : ${shoppingcart}">
+                <div id="name-price">
+                    <p id="cart-item-name" th:text="${item.getKey().getName()}">Name</p>
+                    <p id="cart-item-price" th:text="${item.getKey().getPrice()} + ' sek'">Price</p>
+                </div>
+
+                <div id="amount-buttons">
+                    <a th:href="@{'/add-to-cart?item-id=' + ${item.getKey().id}}" class="cart-item-button">➕</a>
+                    <p id="cart-item-amount" th:text="${item.value}">Amount</p>
+                    <a th:href="@{'/remove-from-cart?item-id=' + ${item.getKey().id}
+                     + '&amount=' + '1'}" class="cart-item-button">➖</a>
+                    <a id="xbutton" th:href="@{'/remove-from-cart?item-id=' + ${item.getKey().id}
+                    + '&amount=' + ${item.value}}" class="cart-item-button">❌</a>
+                </div>
+            </div>
+
+            <hr class="hr-cart">
+            <div>
+                <p id="total" th:text="${total}"></p>
+            </div>
+            <div id="cart-options">
+                <a href="/checkout" id="go-to-check-out">Check out</a>
+                <a href="/clear-cart" id="clear-cart">Clear</a>
+            </div>
 
         </div>
     </div>
@@ -344,17 +441,32 @@
         <button type="submit" style="padding: 10px 20px; font-size: 16px; background-color: #4caf50; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Search</button>
     </form>
 
-    <section class="products">
+    <div class="products-and-sort">
+        <h3 id="producttitle">PRODUCTS</h3>
+        <div>
+            <form id="sortForm" action="/sort" method="post">
+                <label for="sort"></label>
+                <select name="sort" id="sort" onchange="submitForm()">
+                    <option hidden disabled selected>Sort by</option>
+                    <option value="Price high">Price high</option>
+                    <option value="Price low">Price low</option>
+                    <option value="Popularity">Popularity</option>
+                </select>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            </form>
+        </div>
+    </div>
 
-        <div th:each="p : ${searchItem}" class="product">
+    <section class="products">
+        <div th:each="p : ${allproducts}" class="product">
             <img class="productimg" th:src="${p.imagePath}" alt="sunglasses1"/>
             <h4 class="productname" th:text="${p.name}">Glasses 1</h4>
             <p class="producttext" th:text="'Color: ' + ${p.color} + '    Brand: ' + ${p.brand}">Sick skiglasses</p>
             <p id="productprice" class="producttext" th:text="'Price: ' + ${p.price} + ' sek'">Price: </p>
             <a th:href="@{'/add-to-cart?item-id=' + ${p.id}}"><button class="add-to-cart">Add to cart</button></a>
         </div>
-
     </section>
+    <p th:text="${noresult}" style="margin: 20px; font-size: 16px; color: #333333"></p>
 </main>
 <footer>
     <p id="footer">&copy; 2024 Webbshop AB</p>
