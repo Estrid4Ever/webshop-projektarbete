@@ -28,11 +28,6 @@ public class ShopController {
 
     @GetMapping("/")
     public String doGet(Model model) {
-        if (usersService.getUsers().getEnabled() == 0) {
-            model.addAttribute("codestatus", "Your email is not verified, please enter your verification code.");
-            model.addAttribute("userinfo", usersService.getUsers().getEmail());
-            return "verifypage";
-        }
         List<Products> allProducts = productService.fetchAllProducts();
         Hashtable<Products, Integer> shoppingCart = shoppingCartService.getShoppingCart();
         String cartTotal = shoppingCartService.getShoppingCartTotal();

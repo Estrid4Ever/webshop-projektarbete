@@ -7,6 +7,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -14,6 +15,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 @Service
+@SessionScope
 public class EmailServiceImpl implements EmailService {
     private static final String NEW_USER_ACCOUNT_VERIFICATION = "New User account verification";
     private static final String NEW_ORDER_VERIFICATION = "Order Confirmation";

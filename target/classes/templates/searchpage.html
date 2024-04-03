@@ -47,6 +47,12 @@
             padding: 0 10px; /* Optional: Add padding to the container */
         }
 
+        /*#productgrid {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }*/
+
         .product {
             width: calc(25% - 20px); /* Set width for each product */
             margin-bottom: 20px; /* Optional: Add bottom margin */
@@ -457,15 +463,19 @@
         </div>
     </div>
 
-    <section class="products">
-        <div th:each="p : ${allproducts}" class="product">
-            <img class="productimg" th:src="${p.imagePath}" alt="sunglasses1"/>
-            <h4 class="productname" th:text="${p.name}">Glasses 1</h4>
-            <p class="producttext" th:text="'Color: ' + ${p.color} + '    Brand: ' + ${p.brand}">Sick skiglasses</p>
-            <p id="productprice" class="producttext" th:text="'Price: ' + ${p.price} + ' sek'">Price: </p>
-            <a th:href="@{'/add-to-cart?item-id=' + ${p.id}}"><button class="add-to-cart">Add to cart</button></a>
-        </div>
-    </section>
+    <div id="productgrid">
+        <section class="products">
+            <div th:each="p : ${allproducts}" class="product">
+                <img class="productimg" th:src="${p.imagePath}" alt="sunglasses1"/>
+                <h4 class="productname" th:text="${p.name}">Glasses 1</h4>
+                <p class="producttext" th:text="'Color: ' + ${p.color} + '    Brand: ' + ${p.brand}">Sick skiglasses</p>
+                <p id="productprice" class="producttext" th:text="'Price: ' + ${p.price} + ' sek'">Price: </p>
+                <a th:href="@{'/add-to-cart?item-id=' + ${p.id}}"><button class="add-to-cart">Add to cart</button></a>
+            </div>
+        </section>
+
+    </div>
+
     <p th:text="${noresult}" style="margin: 20px; font-size: 16px; color: #333333"></p>
 </main>
 <footer>

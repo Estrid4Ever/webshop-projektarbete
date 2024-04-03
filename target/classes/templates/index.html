@@ -43,7 +43,7 @@
         .products {
             display: flex; /* Use flexbox */
             flex-wrap: wrap; /* Wrap items to next line */
-            justify-content: space-between; /* Distribute space between items */
+            justify-content: space-evenly; /* Distribute space between items */
             padding: 0 10px; /* Optional: Add padding to the container */
         }
 
@@ -134,6 +134,11 @@
 
         .producttext {
             font-family: 'arial', monospace;
+            margin-right: 20px;
+        }
+
+        .producttextcontainer {
+            display: flex;
         }
 
         body {
@@ -395,7 +400,7 @@
     <nav id="navbar">
         <a href="/" class="nav-link">HOME</a>
         <a href="/searchsite" class="nav-link">SEARCH</a>
-        <a href="#" class="nav-link">MY ACCOUNT</a>
+        <a href="/logout" class="nav-link">MY ACCOUNT</a>
         <a href="#" class="nav-link">CONTACT US</a>
     </nav>
 
@@ -454,7 +459,10 @@
         <div th:each="p : ${allproducts}" class="product">
             <img class="productimg" th:src="${p.imagePath}" alt="sunglasses1"/>
             <h4 class="productname" th:text="${p.name}">Glasses 1</h4>
-            <p class="producttext" th:text="'Color: ' + ${p.color} + '    Brand: ' + ${p.brand}">Sick skiglasses</p>
+            <div class="producttextcontainer">
+                <p class="producttext" th:text="'Color: ' + ${p.color}">Sick skiglasses</p>
+                <p class="producttext" th:text="'Brand: ' + ${p.brand}">Sick skiglasses</p>
+            </div>
             <p id="productprice" class="producttext" th:text="'Price: ' + ${p.price} + ' sek'">Price: </p>
             <a th:href="@{'/add-to-cart?item-id=' + ${p.id}}"><button class="add-to-cart">Add to cart</button></a>
         </div>

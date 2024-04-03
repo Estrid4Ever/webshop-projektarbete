@@ -9,6 +9,7 @@ import com.webshop.webshopprojektarbete.repository.OrderRepo;
 import com.webshop.webshopprojektarbete.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.time.LocalDateTime;
 import java.util.Hashtable;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@SessionScope
 public class OrderService {
     @Autowired
     OrderRepo orderRepo;

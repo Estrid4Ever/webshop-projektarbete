@@ -56,7 +56,6 @@ public class CheckOutController {
 
         emailService.sendOrderVerification(verificationEmail, shoppingCartService.getShoppingCart());
         shoppingCartService.clearShoppingCart();
-        usersService.resetUserData();
 
         return "confirmationpage";
     }
