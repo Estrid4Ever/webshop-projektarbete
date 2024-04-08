@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products for Handling</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .order-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 20px;
+        }
+
+        .order {
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .order-info {
+            margin-bottom: 10px;
+        }
+
+        .product-actions {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .action-button {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .action-button:hover {
+            background-color: #0056b3;
+        }
+        .return-to-dashboard-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .return-to-dashboard-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h1>Received Orders</h1>
+<div class="order-container">
+    <!-- Repeat for each order -->
+    <div th:each="order : ${received_orders}" class="order">
+        <div class="order-info">
+            <p class="order-heading">Order Information</p>
+            <p><span class="order-label">Order ID:</span> <span class="order-value" th:text="${order.getId()}"></span></p>
+            <p><span class="order-label">Order Time:</span> <span class="order-value" th:text="${order.getOrderTime()}"></span></p>
+            <p><span class="order-label">Status:</span> <span class="order-value" th:text="${order.getStatus()}"></span></p>
+            <p><span class="order-label">User ID:</span> <span class="order-value" th:text="${order.getUserId()}"></span></p>
+        </div>
+        <div class="product-actions">
+            <form method="post" th:action="@{/start_handling}">
+                <input type="hidden" name="order_id" th:value="${order.getId()}"/>
+                <button type="submit" class="action-button">Go to order</button>
+            </form>
+        </div>
+    </div>
+</div>
+<button onclick="window.location.href = '/admin_start_page';" class="return-to-dashboard-button">Return to Dashboard</button>
+</body>
+</html>
