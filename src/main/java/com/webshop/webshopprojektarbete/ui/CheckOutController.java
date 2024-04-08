@@ -1,8 +1,6 @@
 package com.webshop.webshopprojektarbete.ui;
 
-import com.webshop.webshopprojektarbete.entity.Products;
 import com.webshop.webshopprojektarbete.service.*;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

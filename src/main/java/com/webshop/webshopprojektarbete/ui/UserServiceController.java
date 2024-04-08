@@ -96,4 +96,9 @@ public class UserServiceController {
             return "notverified";
         }
     }
+
+    @GetMapping("logoutsite")
+    public String logout() {
+        return "/logout";
+    }
 }

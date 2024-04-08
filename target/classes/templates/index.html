@@ -32,10 +32,6 @@
             width: 100%;
         }
 
-        #navbar {
-            text-align: center;
-        }
-
         .productimg {
             width: 100%;
         }
@@ -55,8 +51,9 @@
         }
 
         #navbar {
+            text-align: center;
             margin: 0 0 -40px;
-            display: block;
+            display: flex;
             justify-content: center;
             align-items: center;
             background-color: rgba(5, 112, 108, 0.33); /* Bakgrundsfärg för navigationsfältet */
@@ -71,7 +68,8 @@
             color: rgba(255, 255, 255, 0.78); /* Färg för länktexten */
             font-size: 80%;
             /*            padding: 7px 5% 9px; !* Lite utrymme runt länktexten *!*/
-            margin: 5%; /* Lite mellanrum mellan länkarna */
+            margin-right: 5vh; /* Lite mellanrum mellan länkarna */
+            margin-left: 5vh;
             border: solid transparent; /* En transparent ram runt länkarna */
             border-radius: 2px; /* Runda hörn för en modernare känsla */
             transition: all 0.3s ease; /* En smidig övergång för hover-effekten */
@@ -86,6 +84,11 @@
 
         .nav-link:focus {
             outline: none; /* Ta bort fokusramen när länken är i fokus */
+        }
+
+        #logoutsubmit {
+            background-color: transparent;
+            /*margin-left: 10%;*/
         }
 
         .header-container {
@@ -400,8 +403,11 @@
     <nav id="navbar">
         <a href="/" class="nav-link">HOME</a>
         <a href="/searchsite" class="nav-link">SEARCH</a>
-        <a href="/logout" class="nav-link">MY ACCOUNT</a>
         <a href="#" class="nav-link">CONTACT US</a>
+        <form action="/logout" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input id="logoutsubmit" type="submit" value="LOGOUT" class="nav-link">
+        </form>
     </nav>
 
     <div class="cart-container">

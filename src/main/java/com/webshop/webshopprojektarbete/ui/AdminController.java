@@ -1,7 +1,6 @@
 package com.webshop.webshopprojektarbete.ui;
 
 import com.webshop.webshopprojektarbete.entity.Order;
-import com.webshop.webshopprojektarbete.entity.Orderline;
 import com.webshop.webshopprojektarbete.repository.OrderLineRepo;
 import com.webshop.webshopprojektarbete.repository.OrderRepo;
 import com.webshop.webshopprojektarbete.service.OrderService;
