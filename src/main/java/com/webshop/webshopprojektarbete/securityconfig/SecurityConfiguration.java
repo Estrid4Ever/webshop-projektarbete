@@ -19,6 +19,9 @@ public class SecurityConfiguration{
     @Autowired
     CustomAuthenticationProvider customAuthProvider;
 
+    @Autowired
+    CustomAccessDeniedHandler customAccessDeniedHandler;
+
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
@@ -54,6 +57,10 @@ public class SecurityConfiguration{
                         .invalidateHttpSession(true)
                         .deleteCookies()
                         /*.logoutSuccessUrl()*/
+                )
+                .exceptionHandling(exceptionHandling ->
+                        exceptionHandling
+                                .accessDeniedHandler(customAccessDeniedHandler) // Specify custom Access Denied handler
                 )
 
                 .authenticationManager(authManager);
