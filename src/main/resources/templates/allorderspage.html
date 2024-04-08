@@ -10,6 +10,7 @@
             margin: 0;
             padding: 20px;
             background-color: #f9f9f9;
+            position: relative; /* Lägg till relativ position på body för att kunna positionera knappen */
         }
 
         h1 {
@@ -39,7 +40,6 @@
             display: flex;
             justify-content: space-between;
         }
-
         .action-button {
             padding: 8px 12px;
             background-color: #007bff;
@@ -54,10 +54,27 @@
         .action-button:hover {
             background-color: #0056b3;
         }
+
+        .return-to-dashboard-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .return-to-dashboard-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
-<h1>ALL ORDERS</h1>
+<h1>ALL ORDERS  </h1>
 <div class="order-container">
     <!-- Repeat for each order -->
     <div th:each="order : ${all_orders}" class="order">
@@ -76,5 +93,7 @@
         </div>
     </div>
 </div>
+<!-- Blå fin knapp för att gå tillbaka till instrumentpanelen -->
+<button onclick="window.location.href = '/admin_start_page';" class="return-to-dashboard-button">Return to Dashboard</button>
 </body>
 </html>

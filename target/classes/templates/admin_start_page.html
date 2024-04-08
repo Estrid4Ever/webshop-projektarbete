@@ -82,7 +82,7 @@
             </form>
     </div>
     <div  class="alternativ-type">
-        <form method="get" action="/shipped_orders">
+        <form method="get" action="/pending_orders">
             <div class="alternativ-info">
                 <button type="submit" class="action-button">Pending orders</button>
             </div>
@@ -90,9 +90,11 @@
     </div>
 
     <div class="alternativ-type">
+        <form method="get" action="/add_product">
         <div class="alternativ-info">
-            <button type="submit" name="action" value="PENDING" class="action-button">Add product</button>
+            <button type="submit" name="action" class="action-button">Add product</button>
         </div>
+        </form>
     </div>
 </div>
 </body>

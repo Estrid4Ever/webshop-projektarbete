@@ -31,6 +31,18 @@ public class Products {
     @OneToMany(mappedBy = "productsByProductId")
     private Collection<Orderline> orderlinesById;
 
+    public Products(String name, String color, int size, String brand, int price, String imagePath) {
+        this.name = name;
+        this.color = color;
+        this.size = size;
+        this.brand = brand;
+        this.price = price;
+        this.imagePath = imagePath;
+    }
+
+    public Products() {
+    }
+
     public String getImagePath() {
         return imagePath;
     }

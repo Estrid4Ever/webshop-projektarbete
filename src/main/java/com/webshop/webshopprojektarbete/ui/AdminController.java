@@ -1,15 +1,18 @@
 package com.webshop.webshopprojektarbete.ui;
 
 import com.webshop.webshopprojektarbete.entity.Order;
+import com.webshop.webshopprojektarbete.entity.Products;
 import com.webshop.webshopprojektarbete.repository.OrderLineRepo;
 import com.webshop.webshopprojektarbete.repository.OrderRepo;
 import com.webshop.webshopprojektarbete.service.OrderService;
+import com.webshop.webshopprojektarbete.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,6 +24,8 @@ public class AdminController {
     OrderLineRepo orderLineRepo;
     @Autowired
     OrderService orderService;
+    @Autowired
+    ProductService productService;
 
     @GetMapping("/allorders")
     public String showAllOrders(Model model){
@@ -73,5 +78,42 @@ public class AdminController {
         List<Order> sentOrders = orderService.findOrdersByStatus("SENT");
         model.addAttribute("sent_orders", sentOrders);
         return "shipped_orders_page";
+    }
+    @GetMapping("/pending_orders")
+    public String showPendingOrders(Model model){
+        List<Order> pendingOrders = orderService.findOrdersByStatus("PENDING");
+        model.addAttribute("pending_orders", pendingOrders);
+        return "pending_orders_page";
+    }
+    @GetMapping("/add_product")
+    public String addNewProductFirst(){
+        System.out.println("hejdå");
+        return "add_product_form";
+    }
+
+    @GetMapping("/dashboard")
+    public String goToDashboard(){
+        return "admin_start_page";
+    }
+
+
+    @PostMapping("/add_product")
+    public String addNewProductSecond(@RequestParam String name,
+                                      @RequestParam String color,
+                                      @RequestParam int size,
+                                      @RequestParam String brand,
+                                      @RequestParam int price,
+                                      @RequestParam("file") MultipartFile file,
+                                      Model model){
+
+        productService.handleFileUploadTARGET(file);
+        //productService.handleFileUploadSRC(file);
+        String filePathToSave = productService.convertImagePath(file);
+        System.out.println(filePathToSave);
+        Products p = new Products(name,color,size,brand,price,filePathToSave);
+        productService.addNewProduct(p);
+
+        model.addAttribute("added_product",p);
+        return "/added_product_confirmation_page";
     }
 }

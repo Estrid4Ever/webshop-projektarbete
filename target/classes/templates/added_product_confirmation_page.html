@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verified</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: #009688;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #00796b;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Product Added</h1>
+    <p>Redirecting to <a href="/static">home page</a>...</p>
+    <div th:each="p : ${added_product}" class="product">
+        <img class="productimg" th:src="${p.imagePath}" alt="sunglasses1"/>
+        <h4 class="productname" th:text="${p.getName}">Glasses 1</h4>
+        <p class="producttext" th:text="'Color: ' + ${p.getColor} + '    Brand: ' + ${p.getBrand}">Sick skiglasses</p>
+        <p id="productprice" class="producttext" th:text="'Price: ' + ${p.getPrice} + ' sek'">Price: </p>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    </div>
+</div>
+
+<script>
+    // Redirect after a delay (e.g., 3000 milliseconds = 3 seconds)
+    setTimeout(function() {
+        window.location.href = "admin_start_page";
+    }, 5000);
+</script>
+</body>
+</html>

@@ -85,6 +85,22 @@
         .action-button:hover {
             background-color: #0056b3;
         }
+        .return-to-dashboard-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .return-to-dashboard-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -127,5 +143,6 @@
         </div>
     </div>
 </div>
+<button onclick="window.location.href = '/admin_start_page';" class="return-to-dashboard-button">Return to Dashboard</button>
 </body>
 </html>
