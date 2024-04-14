@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Denied</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #dc3545;
+        }
+
+        p {
+            color: #6c757d;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Access Denied</h1>
+    <p>Sorry, you don't have permission to access this page.</p>
+    <p>Redirecting to <a href="/">home page</a>...</p>
+</div>
+<script>
+    // Redirect after a delay (e.g., 3000 milliseconds = 3 seconds)
+    setTimeout(function() {
+        window.location.href = "/";
+    }, 1500);
+</script>
+</body>
+</html>
