@@ -3,6 +3,7 @@
 /Users/johannes/Programmering/Github/webshop-projektarbete/src/main/java/com/webshop/webshopprojektarbete/service/UserService.java
 /Users/johannes/Programmering/Github/webshop-projektarbete/src/main/java/com/webshop/webshopprojektarbete/repository/OrderRepo.java
 /Users/johannes/Programmering/Github/webshop-projektarbete/src/main/java/com/webshop/webshopprojektarbete/repository/ConfirmationRepo.java
+/Users/johannes/Programmering/Github/webshop-projektarbete/src/main/java/com/webshop/webshopprojektarbete/securityconfig/CustomAccessDeniedHandler.java
 /Users/johannes/Programmering/Github/webshop-projektarbete/src/main/java/com/webshop/webshopprojektarbete/service/CheckOutService.java
 /Users/johannes/Programmering/Github/webshop-projektarbete/src/main/java/com/webshop/webshopprojektarbete/ui/AdminController.java
 /Users/johannes/Programmering/Github/webshop-projektarbete/src/main/java/com/webshop/webshopprojektarbete/ui/ShopController.java
@@ -15,6 +16,7 @@
 /Users/johannes/Programmering/Github/webshop-projektarbete/src/main/java/com/webshop/webshopprojektarbete/ui/ImageController.java
 /Users/johannes/Programmering/Github/webshop-projektarbete/src/main/java/com/webshop/webshopprojektarbete/entity/Users.java
 /Users/johannes/Programmering/Github/webshop-projektarbete/src/main/java/com/webshop/webshopprojektarbete/entity/Order.java
+/Users/johannes/Programmering/Github/webshop-projektarbete/src/main/java/com/webshop/webshopprojektarbete/ui/ErrorController.java
 /Users/johannes/Programmering/Github/webshop-projektarbete/src/main/java/com/webshop/webshopprojektarbete/securityconfig/CustomAuthenticationSuccessHandler.java
 /Users/johannes/Programmering/Github/webshop-projektarbete/src/main/java/com/webshop/webshopprojektarbete/service/EmailService.java
 /Users/johannes/Programmering/Github/webshop-projektarbete/src/main/java/com/webshop/webshopprojektarbete/service/OrderService.java

@@ -16,12 +16,16 @@ import java.util.Optional;
 public class ShoppingCartService {
     private Hashtable<Products, Integer> shoppingCart;
 
-    @Autowired
     private ProductRepo productRepo;
 
     @PostConstruct
     public void init() {
         shoppingCart = new Hashtable<Products, Integer>();
+    }
+
+    @Autowired
+    public void setProductRepo(ProductRepo productRepo) {
+        this.productRepo = productRepo;
     }
 
     public void addProductToCart(int id) {

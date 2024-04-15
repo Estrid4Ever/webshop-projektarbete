@@ -1,4 +1,4 @@
-package com.webshop.webshopprojektarbete;
+package com.webshop.webshopprojektarbete.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
