@@ -29,7 +29,6 @@ public class AdminController {
 
     @GetMapping("/allorders")
     public String showAllOrders(Model model){
-        //todo lägg LIST i service ??
         List<Order> orderList = orderRepo.findAll();
         model.addAttribute("all_orders", orderList);
         return "allorderspage";
@@ -45,19 +44,12 @@ public class AdminController {
     public String markOrder(@RequestParam("order_id") int orderId, @RequestParam("action") String action, Model model) {
         String orderStatus = null;
         switch (action) {
-            case "PENDING":
-                orderStatus = "PENDING";
-                break;
-            case "SHIPPED":
-                orderStatus = "SENT";
-
-                break;
-            case "RECEIVED":
-                orderStatus = "RECEIVED";
-                break;
-            case "RETURN":
+            case "PENDING" -> orderStatus = "PENDING";
+            case "SHIPPED" -> orderStatus = "SENT";
+            case "RECEIVED" -> orderStatus = "RECEIVED";
+            case "RETURN" -> {
                 return "redirect:/allorders";
-
+            }
         }
         orderService.markOrder(orderId, orderStatus);
         return startHandlingOrder(orderId, model);
@@ -109,9 +101,7 @@ public class AdminController {
         productService.handleFileUploadTARGET(file);
         //productService.handleFileUploadSRC(file);
         String filePathToSave = productService.convertImagePath(file);
-        System.out.println(filePathToSave);
-        Products p = new Products(name,color,size,brand,price,filePathToSave);
-        productService.addNewProduct(p);
+        Products p = productService.addNewProduct(name,color,size,brand,price,filePathToSave);
 
         model.addAttribute("added_product",p);
         return "/added_product_confirmation_page";
