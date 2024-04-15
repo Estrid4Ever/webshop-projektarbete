@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 @SessionScope
 public class EmailServiceImpl implements EmailService {
-    private static final String NEW_USER_ACCOUNT_VERIFICATION = "New User account verification";
+    private static final String NEW_USER_ACCOUNT_VERIFICATION = "New User Account Verification";
     private static final String NEW_ORDER_VERIFICATION = "Order Confirmation";
 
     public JavaMailSender emailSender;
@@ -25,10 +25,6 @@ public class EmailServiceImpl implements EmailService {
     public EmailServiceImpl(JavaMailSender emailSender) {
         this.emailSender = emailSender;
     }
-
-
-
-
 
     @Override
     public void sendVerificationToken(String to, String token) {
@@ -43,10 +39,12 @@ public class EmailServiceImpl implements EmailService {
             throw new RuntimeException(exception.getMessage());
         }
     }
+
     @Override
     public void sendOrderVerification(String to, Hashtable<Products, Integer> items) {
         String orderText = generateOrderHtmlEmail(items);
         try {
+
             MimeMessage message = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             helper.setSubject(NEW_ORDER_VERIFICATION);
@@ -58,6 +56,7 @@ public class EmailServiceImpl implements EmailService {
             throw new RuntimeException("Error while sending email: " + e.getMessage(), e);
         }
     }
+
     /*
     @Override
     public void sendOrderVerification(String to, Hashtable<Products, Integer> items) {
@@ -100,6 +99,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
      */
+
     public String generateOrderHtmlEmail(Hashtable<Products,Integer> items){
         StringBuilder emailContent = new StringBuilder();
         int totalOrderPrice = 0;
@@ -127,6 +127,7 @@ public class EmailServiceImpl implements EmailService {
             emailContent.append("<td>").append(totalPrice).append(" kr</td>");
             emailContent.append("</tr>");
             totalOrderPrice += totalPrice;
+
         }
 
         // Avsluta tabellen och HTML-dokumentet
@@ -134,6 +135,11 @@ public class EmailServiceImpl implements EmailService {
         emailContent.append("<p> Total pris: </p>" + totalOrderPrice);
         emailContent.append("<p>Tack för din beställning!</p>");
         emailContent.append("</body></html>");
+
+        if (items.isEmpty()) {
+            // Hantera fallet när items är null eller tom
+            return "Ingen beställning hittades.";
+        }
 
         return emailContent.toString();
     }

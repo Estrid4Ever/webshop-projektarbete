@@ -38,15 +38,10 @@ public class ProductService {
     }
     public List<Products> findings(String s){
         List<Products> found = new ArrayList<>();
-        for (int i = 0; i < findByBrand(s).size(); i++) {
-            found.add(findByBrand(s).get(i));
-        }
-        for (int i = 0; i < findByName(s).size(); i++) {
-            found.add(findByName(s).get(i));
-        }
-        for (int i = 0; i < findByColor(s).size(); i++) {
-            found.add(findByColor(s).get(i));
-        }
+        found.addAll(findByBrand(s));
+        found.addAll(findByColor(s));
+        found.addAll(findByName(s));
+
         return found;
     }
 
