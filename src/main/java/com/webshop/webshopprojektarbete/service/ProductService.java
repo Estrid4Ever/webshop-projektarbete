@@ -57,9 +57,11 @@ public class ProductService {
         }
         return allProducts;
     }
-    public void addNewProduct(Products p){
+    public Products addNewProduct(String name, String color, int size,
+                              String brand, int price, String filePathToSave){
+        Products p = new Products(name, color, size, brand, price, filePathToSave);
         productRepo.save(p);
-
+        return p;
     }
     public String convertImagePath(MultipartFile file){
         return "/image?path=/img/" + file.getOriginalFilename();

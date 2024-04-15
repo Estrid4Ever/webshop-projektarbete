@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface ConfirmationRepo extends JpaRepository<Confirmation, Integer> {
-    Confirmation findByUserId(String useroEmail);
+    Confirmation findByUserId(String userEmail);
 
     Optional<Confirmation> findByToken(String token);
 }

@@ -19,7 +19,9 @@ com/webshop/webshopprojektarbete/service/CheckOutService.class
 com/webshop/webshopprojektarbete/ui/ImageController.class
 com/webshop/webshopprojektarbete/securityconfig/SecurityConfiguration.class
 com/webshop/webshopprojektarbete/Status.class
+com/webshop/webshopprojektarbete/securityconfig/CustomAccessDeniedHandler.class
 com/webshop/webshopprojektarbete/ui/CheckOutController.class
+com/webshop/webshopprojektarbete/ui/ErrorController.class
 com/webshop/webshopprojektarbete/repository/ProductRepo.class
 com/webshop/webshopprojektarbete/securityconfig/CustomAuthenticationSuccessHandler.class
 com/webshop/webshopprojektarbete/repository/UserRepo.class

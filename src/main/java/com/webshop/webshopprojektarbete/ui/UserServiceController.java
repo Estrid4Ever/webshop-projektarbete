@@ -27,7 +27,6 @@ public class UserServiceController {
                                Model model){//vi ber om detta
 
         if (userservice.isRegistered(email)) {
-            // TODO: 2024-03-11 om användaren redan finns registrerad, ge felmeddelande och skicka till loggin-sidan
             model.addAttribute("validationstatus", "Email already registered, please log in.");
             return "loginpage";
         }
@@ -39,8 +38,6 @@ public class UserServiceController {
             model.addAttribute("wrong_email_format", "Wrong email format");
             return "addnewuserpage";
         }
-        // TODO här skicka vidare felformattext
-
 
     }
     @PostMapping("/validateUserLogin") //url fråm formulär
@@ -49,7 +46,6 @@ public class UserServiceController {
                             Model model){//vi ber om detta
 
         Status validate = userservice.validateLogin(email,password);
-        // TODO: 2024-03-29 Användaren kan för tillfället skita i att verifiera sin mailadress 
 
         switch (validate){
             case USER_NOT_REGISTERED -> {

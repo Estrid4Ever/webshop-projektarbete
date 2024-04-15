@@ -9,10 +9,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.List;
 
 @Service
 @SessionScope
@@ -56,49 +54,6 @@ public class EmailServiceImpl implements EmailService {
             throw new RuntimeException("Error while sending email: " + e.getMessage(), e);
         }
     }
-
-    /*
-    @Override
-    public void sendOrderVerification(String to, Hashtable<Products, Integer> items) {
-        String orderText = generateOrderHtmlEmail(items);
-        try{
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
-            message.setFrom("johusproject@gmail.com");
-            message.setTo(to);
-            message.setText(orderText);
-            emailSender.send(message);
-        } catch (Exception exception){
-            System.out.println(exception.getMessage());
-            throw new RuntimeException(exception.getMessage());
-        }
-    }
-
-     */
-    /*
-    public List emailText(Hashtable<Products,Integer> items){
-        List<String> emailContent = new ArrayList<>();
-        // Lägg till rubrik för beställningen
-        emailContent.add("Din beställning:");
-
-        Enumeration<Products> keys = items.keys();
-        while (keys.hasMoreElements()) {
-            Products key = keys.nextElement();
-            Integer value = items.get(key);
-            int totalPrice = key.getPrice() * value;
-
-            // Formatera varje produkt och dess pris
-            String productInfo = String.format("Produkt: %s (Antal: %d, Pris: %d kr)/n", key.getName(), value, totalPrice);
-            emailContent.add(productInfo);
-        }
-
-        // Lägg till avslutande kommentar eller annan information
-        emailContent.add("Tack för din beställning!");
-
-        return emailContent;
-    }
-
-     */
 
     public String generateOrderHtmlEmail(Hashtable<Products,Integer> items){
         StringBuilder emailContent = new StringBuilder();

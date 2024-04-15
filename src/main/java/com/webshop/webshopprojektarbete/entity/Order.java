@@ -15,7 +15,6 @@ public class Order {
     @Column(name = "id", nullable = false)
     private int id;
     @Basic
-    //@Column(name = "user_id", nullable = false, length = 200)
     @Column(name = "user_id", insertable=false, updatable=false, length = 200)
     private String userId;
     @Basic

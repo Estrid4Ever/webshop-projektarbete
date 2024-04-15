@@ -11,11 +11,9 @@ public class Orderline {
     @Column(name = "id", nullable = false)
     private int id;
     @Basic
-    //@Column(name = "order_id", nullable = false)
     @Column(name = "order_id", insertable=false, updatable=false)
     private int orderId;
     @Basic
-    //@Column(name = "product_id", nullable = false)
     @Column(name = "product_id", insertable=false, updatable=false)
     private int productId;
     @Basic

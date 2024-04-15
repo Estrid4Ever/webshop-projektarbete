@@ -28,6 +28,7 @@ public class Products {
     private int price;
     @Column(name = "image_path")
     private String imagePath;
+
     @OneToMany(mappedBy = "productsByProductId")
     private Collection<Orderline> orderlinesById;
 

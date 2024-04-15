@@ -1,2 +1,8 @@
+<<<<<<< HEAD
 C:\Users\Hussein2\Documents\GitHub\webshop-projektarbete\src\test\java\com\webshop\webshopprojektarbete\EmailServiceTest.java
 C:\Users\Hussein2\Documents\GitHub\webshop-projektarbete\src\test\java\com\webshop\webshopprojektarbete\ProductServiceTest.java
+=======
+/Users/johannes/Programmering/Github/webshop-projektarbete/src/test/java/com/webshop/webshopprojektarbete/service/ProductServiceTest.java
+/Users/johannes/Programmering/Github/webshop-projektarbete/src/test/java/com/webshop/webshopprojektarbete/service/EmailServiceTest.java
+/Users/johannes/Programmering/Github/webshop-projektarbete/src/test/java/com/webshop/webshopprojektarbete/service/ShoppingCartServiceTest.java
+>>>>>>> origin/main
