@@ -55,13 +55,11 @@ public class SecurityConfiguration{
                         .clearAuthentication(true)
                         .invalidateHttpSession(true)
                         .deleteCookies()
-                        /*.logoutSuccessUrl()*/
                 )
                 .exceptionHandling(exceptionHandling ->
                         exceptionHandling
                                 .accessDeniedHandler(customAccessDeniedHandler) // Specify custom Access Denied handler
                 )
-
                 .authenticationManager(authManager);
         return http.build();
     }
