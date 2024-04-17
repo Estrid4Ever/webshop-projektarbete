@@ -7,9 +7,8 @@ import com.webshop.webshopprojektarbete.service.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Hashtable;
 import java.util.List;
@@ -74,25 +73,43 @@ public class ShopController {
     @GetMapping("/clear-cart")
     public String clearCart(Model model) {
         shoppingCartService.clearShoppingCart();
-
-        return "redirect:/";
+        Hashtable<Products, Integer> shoppingCart = shoppingCartService.getShoppingCart();
+        String cartTotal = shoppingCartService.getShoppingCartTotal();
+        model.addAttribute("total", cartTotal);
+        model.addAttribute("shoppingcart", shoppingCart);
+        return "index :: #cartcontent";
     }
 
-    @GetMapping("/add-to-cart")
+    /*@GetMapping("/add-to-cart")
     public String addItemToCart(@RequestParam("item-id") String itemId, Model model) {
         shoppingCartService.addProductToCart(Integer.parseInt(itemId));
         return "redirect:/";
+    }*/
+
+    @RequestMapping(value="/add-to-cart", method=RequestMethod.GET)
+    public String removeFromCart(@RequestParam("item-id") String itemId, ModelMap map) {
+        shoppingCartService.addProductToCart(Integer.parseInt(itemId));
+        Hashtable<Products, Integer> shoppingCart = shoppingCartService.getShoppingCart();
+        String cartTotal = shoppingCartService.getShoppingCartTotal();
+        map.addAttribute("total", cartTotal);
+        map.addAttribute("shoppingcart", shoppingCart);
+        return "index :: #cartcontent";
     }
 
-    @GetMapping("/remove-from-cart")
-    public String removeItemFromCart(@RequestParam("item-id") String itemId,
-                                     @RequestParam("amount") String amount, Model model) {
+    @RequestMapping(value="/remove-from-cart", method=RequestMethod.GET)
+    public String removeFromCart(@RequestParam("item-id") String itemId,
+                                 @RequestParam("amount") String amount, ModelMap map) {
 
         int removeAmount = Integer.parseInt(amount);
 
         for (int i = 0; i < removeAmount; i++) {
             shoppingCartService.removeProductFromCart(Integer.parseInt(itemId));
         }
-        return "redirect:/";
+        Hashtable<Products, Integer> shoppingCart = shoppingCartService.getShoppingCart();
+        String cartTotal = shoppingCartService.getShoppingCartTotal();
+        map.addAttribute("total", cartTotal);
+        map.addAttribute("shoppingcart", shoppingCart);
+        return "index :: #cartcontent";
     }
+
 }

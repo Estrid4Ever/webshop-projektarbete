@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -238,7 +238,7 @@
             transition: opacity 0.3s ease;
         }
 
-        .cart-container {
+        #cart-container {
             position: relative;
         }
 
@@ -357,12 +357,14 @@
         }
 
     </style>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+        let cartBtn;
+        let cartWindow;
 
         document.addEventListener("DOMContentLoaded", function() {
-            const cartBtn = document.getElementById("cartBtn");
-            const cartWindow = document.getElementById("cartWindow");
+            cartBtn = document.getElementById("cartBtn");
+            cartWindow = document.getElementById("cartWindow");
 
             cartBtn.addEventListener("click", function() {
                 cartWindow.classList.toggle("show");
@@ -383,6 +385,21 @@
 
         function submitForm() {
             document.getElementById("sortForm").submit();
+        }
+
+
+        function updatecart(getUrl) {
+            console.log("Updating cart with URL:", getUrl);
+            jQuery.get(getUrl).done(function(fragment) {
+                console.log("Received fragment from server:", fragment);
+                // get from controller
+                $("#cartcontent").replaceWith(fragment); // update snippet of page
+            });
+
+            cartWindow.style.opacity = "1";
+            cartWindow.style.display = "block";
+            cartBtn.style.paddingLeft = "260px"; // Adjust padding when showing the cart window
+            cartBtn.style.borderRadius = "5px 5px 2px 2px";
         }
 
     </script>
@@ -410,34 +427,37 @@
         </form>
     </nav>
 
-    <div class="cart-container">
+    <div id="cart-container">
         <button id="cartBtn" class="shopping-cart-btn"><i class="fas fa-shopping-cart"></i></button>
         <div class="cart-window" id="cartWindow" aria-placeholder="Your cart is empty">
-            <br>
-            <hr class="hr-cart">
-            <div class="cartitem" th:each="item : ${shoppingcart}">
-                <div id="name-price">
-                    <p id="cart-item-name" th:text="${item.getKey().getName()}">Name</p>
-                    <p id="cart-item-price" th:text="${item.getKey().getPrice()} + ' sek'">Price</p>
+            <div id="cartcontent">
+                <br>
+                <hr class="hr-cart">
+                <div class="cartitem" th:each="item : ${shoppingcart}">
+                    <div id="name-price">
+                        <p id="cart-item-name" th:text="${item.getKey().getName()}">Name</p>
+                        <p id="cart-item-price" th:text="${item.getKey().getPrice()} + ' sek'">Price</p>
+                    </div>
+
+                    <div id="amount-buttons">
+                        <a th:onclick="'javascript:updatecart(\''+ '/add-to-cart?item-id=' + ${item.getKey().id} + '\');'" class="cart-item-button">➕</a>
+                        <p id="cart-item-amount" th:text="${item.value}">Amount</p>
+                        <a th:onclick="'javascript:updatecart(\''+ '/remove-from-cart?item-id=' + ${item.getKey().id} + '&amount=' + '1' + '\');'"
+                           class="cart-item-button">➖</a>
+                        <a id="xbutton" th:onclick="'javascript:updatecart(\''+ '/remove-from-cart?item-id=' + ${item.getKey().id} + '&amount=' + ${item.value} + '\');'"
+                            class="cart-item-button">❌</a>
+
+                    </div>
                 </div>
 
-                <div id="amount-buttons">
-                    <a th:href="@{'/add-to-cart?item-id=' + ${item.getKey().id}}" class="cart-item-button">➕</a>
-                    <p id="cart-item-amount" th:text="${item.value}">Amount</p>
-                    <a th:href="@{'/remove-from-cart?item-id=' + ${item.getKey().id}
-                     + '&amount=' + '1'}" class="cart-item-button">➖</a>
-                    <a id="xbutton" th:href="@{'/remove-from-cart?item-id=' + ${item.getKey().id}
-                    + '&amount=' + ${item.value}}" class="cart-item-button">❌</a>
+                <hr class="hr-cart">
+                <div>
+                    <p id="total" th:text="${total}"></p>
                 </div>
-            </div>
-
-            <hr class="hr-cart">
-            <div>
-                <p id="total" th:text="${total}"></p>
-            </div>
-            <div id="cart-options">
-                <a href="/checkout" id="go-to-check-out">Check out</a>
-                <a href="/clear-cart" id="clear-cart">Clear</a>
+                <div id="cart-options">
+                    <a href="/checkout" id="go-to-check-out">Check out</a>
+                    <a th:onclick="'javascript:updatecart(\''+ '/clear-cart' + '\');'" id="clear-cart">Clear</a>
+                </div>
             </div>
 
         </div>
@@ -470,7 +490,7 @@
                 <p class="producttext" th:text="'Brand: ' + ${p.brand}">Sick skiglasses</p>
             </div>
             <p id="productprice" class="producttext" th:text="'Price: ' + ${p.price} + ' sek'">Price: </p>
-            <a th:href="@{'/add-to-cart?item-id=' + ${p.id}}"><button class="add-to-cart">Add to cart</button></a>
+            <a th:onclick="'javascript:updatecart(\''+ '/add-to-cart?item-id=' + ${p.id} + '\');'"><button class="add-to-cart">Add to cart</button></a>
         </div>
     </section>
 </main>
